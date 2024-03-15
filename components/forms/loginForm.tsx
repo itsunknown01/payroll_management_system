@@ -30,7 +30,7 @@ const LoginForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(LoginSubmit)}>
+      <form onSubmit={form.handleSubmit(LoginSubmit)} className="space-y-6">
         <div className="space-y-4">
           <FormField
             name="email"
