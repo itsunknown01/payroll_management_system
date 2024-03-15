@@ -75,10 +75,7 @@ const LoginForm = () => {
             )}
           />
         </div>
-        <Button
-        type="submit"
-        className="w-full"
-        >
+        <Button type="submit" className="w-full">
           Login
         </Button>
       </form>
