@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -16,8 +16,10 @@ import { LoginSchema } from "@/schemas";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { login } from "@/actions/auth/login";
 
 const LoginForm = () => {
+  const [loading, startTransition] = useTransition();
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -26,7 +28,11 @@ const LoginForm = () => {
     },
   });
 
-  const LoginSubmit = (values: z.infer<typeof LoginSchema>) => {};
+  const LoginSubmit = (values: z.infer<typeof LoginSchema>) => {
+    startTransition(() => {
+      login(values).then((data) => console.log(data));
+    });
+  };
 
   return (
     <Form {...form}>
@@ -42,6 +48,7 @@ const LoginForm = () => {
                   <Input
                     type="email"
                     placeholder="Enter your email"
+                    disabled={loading}
                     {...field}
                   />
                 </FormControl>
@@ -59,6 +66,7 @@ const LoginForm = () => {
                   <Input
                     type="password"
                     placeholder="Enter your password"
+                    disabled={loading}
                     {...field}
                   />
                 </FormControl>
@@ -75,7 +83,7 @@ const LoginForm = () => {
             )}
           />
         </div>
-        <Button type="submit" className="w-full">
+        <Button disabled={loading} type="submit" className="w-full">
           Login
         </Button>
       </form>
