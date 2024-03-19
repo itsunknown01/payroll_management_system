@@ -20,3 +20,9 @@ export const RegisterSchema = z.object({
         message: "Name is required"
     }), 
 })
+
+export const DepartmentSchema = z.object({
+    name: z.string().min(1,{
+        message: "Department Name is required"
+    }), 
+})
