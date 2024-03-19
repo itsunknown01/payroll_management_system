@@ -49,19 +49,158 @@ model Account {
 }
 
 model VerificationToken {
-  id String @id @unique @default(uuid())
-  email String
-  token String @unique
+  id      String   @id @unique @default(uuid())
+  email   String
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
 }
 
 model PasswordResetToken {
-  id String @id @unique @default(uuid())
-  email String
-  token String @unique
+  id      String   @id @unique @default(uuid())
+  email   String
+  token   String   @unique
   expires DateTime
 
   @@unique([email, token])
+}
+
+// dashboard database
+model Department {
+  id        String     @id @unique @default(uuid())
+  name      String
+  positions Position[]
+  employees Employee[]
+}
+
+model Position {
+  id           String     @id @unique @default(uuid())
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  name         String
+  employees    Employee[]
+}
+
+model Employee {
+  id           String     @id @unique @default(uuid())
+  employee_no  Int        @unique
+  firstName    String
+  middleName   String
+  lastName     String
+  departmentId String
+  department   Department @relation(fields: [departmentId], references: [id])
+  positionId   String
+  position     Position   @relation(fields: [positionId], references: [id])
+
+  employeeAllowance EmployeeAllowance[]
+  employeeDeduction EmployeeDeduction[]
+  attendances       Attendance[]
+}
+
+enum PayType {
+  Monthly
+  Semi_Monthly
+}
+
+enum StatusType {
+  New
+  Computed
+}
+
+model Payroll {
+  id           String        @id @unique @default(uuid())
+  refNo        String        @unique
+  From         DateTime
+  To           DateTime
+  type         PayType       @default(Monthly)
+  status       StatusType    @default(New)
+  payrollLists PayrollList[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Deduction {
+  id          String @id @unique @default(uuid())
+  deduction   String
+  description String
+
+  employeeDeduction EmployeeDeduction[]
+}
+
+model Allowance {
+  id          String @id @unique @default(uuid())
+  allowance   String
+  description String
+
+  employeeAllowance EmployeeAllowance[]
+}
+
+model PayrollList {
+  id              String      @id @unique @default(uuid())
+  payrollId       String
+  payroll         Payroll     @relation(fields: [payrollId], references: [id])
+  present         Int
+  absent          Int
+  late            String
+  salary          Float
+  allowanceAmount Float
+  allowances      String
+  deductionAmount Float
+  deductions      String
+  net             Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum EmployPayType {
+  Monthly
+  Semi_Monthly
+  Once
+}
+
+model EmployeeAllowance {
+  id            String        @id @unique @default(uuid())
+  employeeId    String
+  employee      Employee      @relation(fields: [employeeId], references: [id])
+  allowanceId   String
+  allowance     Allowance     @relation(fields: [allowanceId], references: [id])
+  salaryType    EmployPayType @default(Once)
+  allowanceDate DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EmployeeDeduction {
+  id            String        @id @unique @default(uuid())
+  employeeId    String
+  employee      Employee      @relation(fields: [employeeId], references: [id])
+  deductionId   String
+  deduction     Deduction     @relation(fields: [deductionId], references: [id])
+  salaryType    EmployPayType @default(Once)
+  deductionDate DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Logs {
+  AM_IN
+  AM_OUT
+  PM_IN
+  PM_OUT
+}
+
+model Attendance {
+  id          String   @id @unique @default(uuid())
+  employeeId  String
+  employee    Employee @relation(fields: [employeeId], references: [id])
+  logType     Logs     @default(AM_IN)
+  datetimeLog DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
