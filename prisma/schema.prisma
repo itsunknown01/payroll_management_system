@@ -68,29 +68,29 @@ model PasswordResetToken {
 
 // dashboard database
 model Department {
-  id        String     @id @unique @default(uuid())
+  id        Int        @id @unique @default(autoincrement())
   name      String
   positions Position[]
   employees Employee[]
 }
 
 model Position {
-  id           String     @id @unique @default(uuid())
-  departmentId String
+  id           Int        @id @unique @default(autoincrement())
+  departmentId Int
   department   Department @relation(fields: [departmentId], references: [id])
   name         String
   employees    Employee[]
 }
 
 model Employee {
-  id           String     @id @unique @default(uuid())
+  id           Int        @id @unique @default(autoincrement())
   employee_no  Int        @unique
   firstName    String
   middleName   String
   lastName     String
-  departmentId String
+  departmentId Int
   department   Department @relation(fields: [departmentId], references: [id])
-  positionId   String
+  positionId   Int
   position     Position   @relation(fields: [positionId], references: [id])
 
   employeeAllowance EmployeeAllowance[]
@@ -109,7 +109,7 @@ enum StatusType {
 }
 
 model Payroll {
-  id           String        @id @unique @default(uuid())
+  id           Int           @id @unique @default(autoincrement())
   refNo        String        @unique
   From         DateTime
   To           DateTime
@@ -122,7 +122,7 @@ model Payroll {
 }
 
 model Deduction {
-  id          String @id @unique @default(uuid())
+  id          Int    @id @unique @default(autoincrement())
   deduction   String
   description String
 
@@ -130,7 +130,7 @@ model Deduction {
 }
 
 model Allowance {
-  id          String @id @unique @default(uuid())
+  id          Int    @id @unique @default(autoincrement())
   allowance   String
   description String
 
@@ -138,9 +138,9 @@ model Allowance {
 }
 
 model PayrollList {
-  id              String      @id @unique @default(uuid())
-  payrollId       String
-  payroll         Payroll     @relation(fields: [payrollId], references: [id])
+  id              Int     @id @unique @default(autoincrement())
+  payrollId       Int
+  payroll         Payroll @relation(fields: [payrollId], references: [id])
   present         Int
   absent          Int
   late            String
@@ -162,10 +162,10 @@ enum EmployPayType {
 }
 
 model EmployeeAllowance {
-  id            String        @id @unique @default(uuid())
-  employeeId    String
+  id            Int           @id @unique @default(autoincrement())
+  employeeId    Int
   employee      Employee      @relation(fields: [employeeId], references: [id])
-  allowanceId   String
+  allowanceId   Int
   allowance     Allowance     @relation(fields: [allowanceId], references: [id])
   salaryType    EmployPayType @default(Once)
   allowanceDate DateTime
@@ -175,10 +175,10 @@ model EmployeeAllowance {
 }
 
 model EmployeeDeduction {
-  id            String        @id @unique @default(uuid())
-  employeeId    String
+  id            Int           @id @unique @default(autoincrement())
+  employeeId    Int
   employee      Employee      @relation(fields: [employeeId], references: [id])
-  deductionId   String
+  deductionId   Int
   deduction     Deduction     @relation(fields: [deductionId], references: [id])
   salaryType    EmployPayType @default(Once)
   deductionDate DateTime
@@ -195,8 +195,8 @@ enum Logs {
 }
 
 model Attendance {
-  id          String   @id @unique @default(uuid())
-  employeeId  String
+  id          Int      @id @unique @default(autoincrement())
+  employeeId  Int
   employee    Employee @relation(fields: [employeeId], references: [id])
   logType     Logs     @default(AM_IN)
   datetimeLog DateTime @default(now())

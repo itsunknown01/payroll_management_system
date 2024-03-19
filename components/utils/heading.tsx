@@ -10,7 +10,7 @@ const Heading = ({ title, description, className }: HeadingProps) => {
   return (
     <div
       className={cn(
-        "w-full flex flex-col items-center justify-center gap-y-4",
+        "max-w-full flex flex-col items-center justify-center gap-y-4",
         className
       )}
     >
