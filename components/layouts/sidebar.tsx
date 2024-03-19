@@ -8,8 +8,8 @@ import { SidebarLinks } from "@/routes/sidebarLinks";
 
 const Sidebar = () => {
   return (
-    <Card className="h-full rounded-none w-[27rem]">
-      <div className="flex py-2 flex-col gap-3">
+    <Card className="h-full rounded-none w-80">
+      <div className="flex py-2 flex-col gap-3 my-20">
         {SidebarLinks.map((link) => (
           <Button
             className="w-full rounded-none text-left justify-start"
