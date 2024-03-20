@@ -30,7 +30,7 @@ const DepartmentClient = ({ data }: DepartmentClientProps) => {
       </div>
 
       <Separator />
-      <DataTable data={data} columns={columns} searchkey="label" />
+      <DataTable data={data} columns={columns} searchkey="name" />
     </div>
   );
 };
