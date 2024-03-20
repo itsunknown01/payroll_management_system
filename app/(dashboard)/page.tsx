@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <Card className="m-4 flex items-center justify-center max-w-full mt-20">
+      <Card className="m-4 flex items-center justify-center max-w-full shadow-none">
         <Heading title={`Welcome back ${UserName}`} className="text-center gap-0 py-2" />
       </Card>
     </div>  

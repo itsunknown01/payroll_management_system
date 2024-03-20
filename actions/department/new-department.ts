@@ -11,7 +11,7 @@ export const newDepartment = async (
   const validation = DepartmentSchema.safeParse(values);
 
   if (!validation.success) {
-    return { error: "Invalid fields" };
+    return { error: "Invalid field" };
   }
 
   const { name } = validation.data;
