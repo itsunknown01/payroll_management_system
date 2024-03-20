@@ -17,6 +17,7 @@ import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import Link from "next/link";
 import { login } from "@/actions/auth/login";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [loading, startTransition] = useTransition();
@@ -30,7 +31,10 @@ const LoginForm = () => {
 
   const LoginSubmit = (values: z.infer<typeof LoginSchema>) => {
     startTransition(() => {
-      login(values).then((data) => console.log(data));
+      login(values).then((data) => {
+        toast.error(data.error)
+        toast.success(data.success)
+      });
     });
   };
 

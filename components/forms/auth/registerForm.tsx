@@ -17,6 +17,7 @@ import { RegisterSchema } from "@/schemas";
 import { Input } from "../../ui/input";
 import { Button } from "../../ui/button";
 import { register } from "@/actions/auth/register";
+import { toast } from "react-toastify";
 
 const RegisterForm = () => {
   const [loading, startTransition] = useTransition();
@@ -31,7 +32,10 @@ const RegisterForm = () => {
 
   const RegisterSubmit = (values: z.infer<typeof RegisterSchema>) => {
     startTransition(() => {
-      register(values);
+      register(values).then((data) => {
+        toast.error(data.error)
+        toast.success(data.success)
+      });
     });
   };
 

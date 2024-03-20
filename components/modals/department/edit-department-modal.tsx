@@ -19,9 +19,13 @@ import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
 import { useModal } from "@/hooks/use-modal-store";
 import { DepartmentSchema } from "@/schemas";
+import { editDepartment } from "@/actions/department/edit-department";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const EditDepartmentModal = () => {
   const [loading, startTransition] = useTransition();
+  const router = useRouter()
   const { isOpen, onClose, type, data } = useModal();
 
   const isModalOpen = isOpen && type == "editDepartment";
@@ -43,9 +47,13 @@ const EditDepartmentModal = () => {
   const OnSubmit = async (values: z.infer<typeof DepartmentSchema>) => {
     form.reset();
     startTransition(() => {
-      // newDepartment(values);
-      onClose();
+      editDepartment(values, department?.id).then((data) => {
+        toast.error(data.error)
+        toast.success(data.success)
+      });
     });
+    router.refresh()
+    onClose();
   };
 
   const handleClose = () => {

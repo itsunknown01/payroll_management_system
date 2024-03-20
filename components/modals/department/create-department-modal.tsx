@@ -20,9 +20,12 @@ import { DialogFooter } from "../../ui/dialog";
 import { Button } from "../../ui/button";
 import { useTransition } from "react";
 import { newDepartment } from "@/actions/department/new-department";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const CreateDepartmentModal = () => {
   const [loading, startTransition] = useTransition();
+  const router = useRouter()
   const { isOpen, onClose, type } = useModal();
 
   const isModalOpen = isOpen && type == "createDepartment";
@@ -37,9 +40,13 @@ const CreateDepartmentModal = () => {
   const OnSubmit = async (values: z.infer<typeof DepartmentSchema>) => {
     form.reset()
     startTransition(() => {
-      newDepartment(values);
-      onClose();
+      newDepartment(values).then((data)=> {
+        toast.error(data.error)
+        toast.success(data.success)
+      });
     })
+    router.refresh();
+    onClose();
   };
 
   const handleClose = () => {
