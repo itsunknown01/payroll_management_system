@@ -1,4 +1,4 @@
-import DepartmentClient from '@/components/department/client'
+import DepartmentClient from '@/components/layouts/department/client'
 import { db } from '@/lib/db'
 
 const DepartmentPage = async () => {

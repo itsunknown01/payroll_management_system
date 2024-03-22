@@ -25,4 +25,13 @@ export const DepartmentSchema = z.object({
     name: z.string().min(1,{
         message: "Department Name is required"
     }), 
+});
+
+export const PositionSchema = z.object({
+    departmentId: z.string().min(1,{
+        message: "Selecting a department is required"
+    }),
+    name: z.string().min(1,{
+        message: "Position Name is required"
+    }), 
 })

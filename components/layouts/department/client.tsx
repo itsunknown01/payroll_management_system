@@ -1,10 +1,10 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { Button } from "../ui/button";
-import Heading from "../utils/heading";
-import { Separator } from "../ui/separator";
-import DataTable from "../ui/data-table";
+import { Button } from "../../ui/button";
+import Heading from "../../utils/heading";
+import { Separator } from "../../ui/separator";
+import DataTable from "../../ui/data-table";
 import { columns } from "./column";
 import { Department } from "@prisma/client";
 import { useModal } from "@/hooks/use-modal-store";
