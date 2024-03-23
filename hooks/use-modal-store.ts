@@ -1,4 +1,5 @@
-import { Department, Employee, Payroll, Position } from "@prisma/client";
+import { PositionColumn } from "@/components/layouts/position/column";
+import { Department, Employee, Payroll } from "@prisma/client";
 import { create } from "zustand";
 
 export type ModalType = "createDepartment" | "editDepartment" | "deleteDepartment" | "createPosition" | "editPosition"| "deletePosition";
@@ -6,7 +7,7 @@ export type ModalType = "createDepartment" | "editDepartment" | "deleteDepartmen
 interface ModalData {
   department?: Department | null
   departments?: Department[]
-  postion?: Position
+  postion?: PositionColumn
   employee?: Employee
   payroll?: Payroll
 }

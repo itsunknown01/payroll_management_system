@@ -4,7 +4,7 @@ import CellAction from "./cell-action"
 export interface PositionColumn {
     id: number
     name: string
-    departmentId: number
+    departmentName: string
 }
 
 export const columns: ColumnDef<PositionColumn>[] = [
@@ -15,6 +15,11 @@ export const columns: ColumnDef<PositionColumn>[] = [
     {
         accessorKey: "name",
         header: "Position"
+    },
+    {
+        accessorKey: "department",
+        header: "Department",
+        cell: ({row}) => row.original.departmentName
     },
     {
         id: "action",

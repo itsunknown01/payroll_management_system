@@ -22,31 +22,38 @@ import { useTransition } from "react";
 // import { newPosition } from "@/actions/position/new-position";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { newPosition } from "@/actions/position/newPosition";
 
 const CreatePositionModal = () => {
   const [loading, startTransition] = useTransition();
   const router = useRouter();
-  const { isOpen, onClose, type,data } = useModal();
+  const { isOpen, onClose, type, data } = useModal();
 
   const isModalOpen = isOpen && type == "createPosition";
-  const {departments} = data
+  const { departments } = data;
 
   const form = useForm<z.infer<typeof PositionSchema>>({
     resolver: zodResolver(PositionSchema),
     defaultValues: {
       name: "",
-      departmentId: ""
+      departmentId: "",
     },
   });
 
   const OnSubmit = async (values: z.infer<typeof PositionSchema>) => {
     form.reset();
     startTransition(() => {
-      // newPosition(values).then((data)=> {
-      //   toast.error(data.error)
-      //   toast.success(data.success)
-      // });
+      newPosition(values).then((data)=> {
+        toast.error(data.error)
+        toast.success(data.success)
+      });
     });
     router.refresh();
     onClose();
@@ -74,7 +81,7 @@ const CreatePositionModal = () => {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                    <SelectTrigger>
+                      <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
                           placeholder="Select department"
@@ -83,7 +90,10 @@ const CreatePositionModal = () => {
                     </FormControl>
                     <SelectContent>
                       {departments?.map((department) => (
-                        <SelectItem key={department.id} value={JSON.stringify(department.id)}>
+                        <SelectItem
+                          key={department.id}
+                          value={JSON.stringify(department.id)}
+                        >
                           {department.name}
                         </SelectItem>
                       ))}

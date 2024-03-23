@@ -16,7 +16,10 @@ const CellAction = ({ data }: CellActionProps) => {
       <Button onClick={() => onOpen("editPosition", { postion: data })}>
         Edit
       </Button>
-      <Button onClick={() => onOpen("deletePosition", {postion: data})} variant="destructive">
+      <Button
+        onClick={() => onOpen("deletePosition", { postion: data })}
+        variant="destructive"
+      >
         Delete
       </Button>
     </div>

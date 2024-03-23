@@ -7,10 +7,10 @@ import { Button } from "../../ui/button";
 import DataTable from "../../ui/data-table";
 import { Separator } from "../../ui/separator";
 import Heading from "../../utils/heading";
-import { columns } from "./column";
+import { PositionColumn, columns } from "./column";
 
 interface PositionClientProps {
-  data: Position[];
+  data: PositionColumn[];
   departments: Department[]
 }
 
