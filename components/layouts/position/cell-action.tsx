@@ -5,19 +5,23 @@ import { Button } from "../../ui/button";
 import { PositionColumn } from "./column";
 
 interface CellActionProps {
-  data: PositionColumn;
+  position: PositionColumn;
 }
 
-const CellAction = ({ data }: CellActionProps) => {
-  const { onOpen } = useModal();
+const CellAction = ({ position }: CellActionProps) => {
+  const { onOpen, data } = useModal();
 
   return (
     <div className="flex gap-2">
-      <Button onClick={() => onOpen("editPosition", { postion: data })}>
+      <Button
+        onClick={() =>
+          onOpen("editPosition", { position, departments: data.departments })
+        }
+      >
         Edit
       </Button>
       <Button
-        onClick={() => onOpen("deletePosition", { postion: data })}
+        onClick={() => onOpen("deletePosition", { position })}
         variant="destructive"
       >
         Delete

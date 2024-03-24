@@ -1,4 +1,5 @@
 import PositionClient from "@/components/layouts/position/client";
+import { PositionColumn } from "@/components/layouts/position/column";
 import { db } from "@/lib/db";
 import React from "react";
 
@@ -9,16 +10,22 @@ const PositionPage = async () => {
     include: { department: true },
   });
 
-  const formattedData = position.map((item) =>({
+  const formattedData: PositionColumn[] = position.map((item) =>({
     id: item.id,
     name: item.name,
+    departmentId: item.departmentId,
     departmentName: item.department.name
   }))
+
+  const data = {
+    departments,
+    position: formattedData
+  }
 
   return (
     <div className="w-full">
       <div className="flex-1 space-y-2 pt-6 p-8 w-full">
-        <PositionClient data={formattedData} departments={departments} />
+        <PositionClient data={data} />
       </div>
     </div>
   );
