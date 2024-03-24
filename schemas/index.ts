@@ -35,3 +35,24 @@ export const PositionSchema = z.object({
         message: "Position Name is required"
     }), 
 })
+
+export const EmployeeSchema = z.object({
+    departmentId: z.string().min(1,{
+        message: "Selecting a department is required"
+    }),
+    firstname: z.string().min(1,{
+        message: "First Name is required"
+    }), 
+    middlename: z.string().min(1,{
+        message: "Middle Name is required"
+    }), 
+    lastname: z.string().min(1,{
+        message: "Last Name is required"
+    }),
+    positionId: z.string().min(1,{
+        message: "Selecting a position is required"
+    }),
+    salary: z.string().min(1,{
+        message: "Salary is required"
+    })
+})

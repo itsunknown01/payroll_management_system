@@ -84,7 +84,7 @@ model Position {
 
 model Employee {
   id           Int        @id @unique @default(autoincrement())
-  employee_no  Int        @unique
+  employee_no  Int        
   firstName    String
   middleName   String
   lastName     String
@@ -92,6 +92,7 @@ model Employee {
   department   Department @relation(fields: [departmentId], references: [id])
   positionId   Int
   position     Position   @relation(fields: [positionId], references: [id])
+  salary       Int
 
   employeeAllowance EmployeeAllowance[]
   employeeDeduction EmployeeDeduction[]
