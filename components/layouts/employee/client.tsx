@@ -8,6 +8,7 @@ import DataTable from "../../ui/data-table";
 import { Separator } from "../../ui/separator";
 import Heading from "../../utils/heading";
 import { EmployeeColumn, columns } from "./column";
+import { useEffect } from "react";
 
 interface EmployeeClientProps {
   data: EmployeeColumn[];
@@ -20,7 +21,13 @@ const EmployeeClient = ({
   positions,
   departments,
 }: EmployeeClientProps) => {
-  const { onOpen } = useModal();
+  const { onOpen, setData } = useModal();
+
+  useEffect(() => {
+    if (positions && departments) {
+      setData({ departments, positions });
+    }
+  }, [positions, departments, setData]);
 
   return (
     <div className="w-full">

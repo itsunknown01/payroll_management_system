@@ -2,21 +2,21 @@
 
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "../../ui/button";
-import { DepartmentColumn } from "./column";
+import { EmployeeColumn } from "./column";
 
 interface CellActionProps {
-  data: DepartmentColumn;
+  employee: EmployeeColumn;
 }
 
-const CellAction = ({ data }: CellActionProps) => {
-  const { onOpen } = useModal();
+const CellAction = ({ employee }: CellActionProps) => {
+  const { onOpen,data } = useModal();
 
   return (
     <div className="flex gap-2">
-      <Button onClick={() => onOpen("editDepartment", { department: data })}>
+      <Button onClick={() => onOpen("editEmployee", { employee, departments: data.departments, positions: data.positions })}>
         Edit
       </Button>
-      <Button onClick={() => onOpen("deleteDepartment", {department: data})} variant="destructive">
+      <Button onClick={() => onOpen("deleteEmployee", {employee})} variant="destructive">
         Delete
       </Button>
     </div>

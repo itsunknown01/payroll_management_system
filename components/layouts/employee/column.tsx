@@ -40,7 +40,7 @@ export const columns: ColumnDef<EmployeeColumn>[] = [
     },
     {
         id: "action",
-        cell: ({row}) => <CellAction data={row.original} />,
+        cell: ({row}) => <CellAction employee={row.original} />,
         header: "Action"
     }
 ]
