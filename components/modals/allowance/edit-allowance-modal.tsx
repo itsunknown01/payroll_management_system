@@ -1,6 +1,6 @@
 "use client";
 
-import { newAllowance } from "@/actions/allowance/new-allowance";
+import { editAllowance } from "@/actions/allowance/edit-allowance";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -10,17 +10,18 @@ import { useModal } from "@/hooks/use-modal-store";
 import { AllowanceSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React, { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as z from "zod";
 
-const CreateAllowanceModal = () => {
+const EditAllowanceModal = () => {
   const [loading, startTransition] = useTransition();
   const router = useRouter();
-  const { isOpen, type, onClose } = useModal();
+  const { isOpen, type, onClose,data } = useModal();
 
-  const isModalOpen = isOpen && type == "createAllowance";
+  const isModalOpen = isOpen && type == "editAllowance";
+  const {allowance} = data
 
   const form = useForm<z.infer<typeof AllowanceSchema>>({
     resolver: zodResolver(AllowanceSchema),
@@ -30,10 +31,17 @@ const CreateAllowanceModal = () => {
     },
   });
 
+  useEffect(()=>{
+    if(allowance) {
+      form.setValue("allowance", allowance.allowance)
+      form.setValue("description", allowance.description)
+    }
+  },[form,allowance])
+
   const OnSubmit = async (values: z.infer<typeof AllowanceSchema>) => {
     form.reset();
     startTransition(() => {
-        newAllowance(values).then((data)=> {
+        editAllowance(values,allowance?.id).then((data)=> {
           toast.error(data.error)
           toast.success(data.success)
         });
@@ -47,7 +55,7 @@ const CreateAllowanceModal = () => {
     onClose();
   };
   return (
-    <Modal isOpen={isModalOpen} onClose={handleClose} title="Create Allowance">
+    <Modal isOpen={isModalOpen} onClose={handleClose} title="Edit Allowance">
       <Form {...form}>
         <form className="space-y-6" onSubmit={form.handleSubmit(OnSubmit)}>
           <div className="px-6 space-y-4">
@@ -90,7 +98,7 @@ const CreateAllowanceModal = () => {
           </div>
           <DialogFooter className="bg-zinc-300 px-6 py-4">
             <Button type="submit" disabled={loading}>
-              Save
+              Update
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </DialogFooter>
@@ -100,4 +108,4 @@ const CreateAllowanceModal = () => {
   );
 };
 
-export default CreateAllowanceModal;
+export default EditAllowanceModal;

@@ -12,12 +12,21 @@ interface CellActionProps {
 const CellAction = ({ data }: CellActionProps) => {
   const { onOpen } = useModal();
 
+  const allowance: Allowance = {
+    id: data.id,
+    allowance: data.info.allowance,
+    description: data.info.description,
+  };
+
   return (
     <div className="flex gap-2">
-      <Button onClick={() => onOpen("editDepartment", { department: data })}>
+      <Button onClick={() => onOpen("editAllowance", { allowance })}>
         Edit
       </Button>
-      <Button onClick={() => onOpen("deleteDepartment", {department: data})} variant="destructive">
+      <Button
+        onClick={() => onOpen("deleteDepartment", { allowance })}
+        variant="destructive"
+      >
         Delete
       </Button>
     </div>
