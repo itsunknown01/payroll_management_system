@@ -84,9 +84,9 @@ model Position {
 
 model Employee {
   id           Int        @id @unique @default(autoincrement())
-  employee_no  Int        
+  employee_no  String        @unique
   firstName    String
-  middleName   String
+  middleName   String?
   lastName     String
   departmentId Int
   department   Department @relation(fields: [departmentId], references: [id])

@@ -15,11 +15,12 @@ export const newEmployee = async (values: z.infer<typeof EmployeeSchema>) => {
     validation.data;
 
   const date = new Date();
-  const presentDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-
+  const presentDate = `${date.getFullYear()}-${Math.floor(Math.random()*10000)}`;
+  console.log(presentDate);
+  
   await db.employee.create({
     data: {
-      employee_no: parseInt(presentDate),
+      employee_no: presentDate,
       firstName: firstname,
       middleName: middlename,
       lastName: lastname,

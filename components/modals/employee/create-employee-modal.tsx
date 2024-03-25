@@ -189,7 +189,7 @@ const CreateEmployeeModal = () => {
                         <SelectItem
                           key={position.id}
                           value={JSON.stringify(position.id)}
-                          disabled={position.departmentId === selectedDepartment}
+                          disabled={position.departmentId !== selectedDepartment}
                         >
                           {position.name}
                         </SelectItem>
