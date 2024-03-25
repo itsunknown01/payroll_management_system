@@ -65,3 +65,11 @@ export const AllowanceSchema = z.object({
         message: "Description is required"
     })
 })
+export const DeductionSchema = z.object({
+    deduction: z.string().min(1, {
+        message: "Allowance is required"
+    }),
+    description: z.string().min(1, {
+        message: "Description is required"
+    })
+})

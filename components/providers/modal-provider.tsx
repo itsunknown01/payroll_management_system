@@ -14,6 +14,7 @@ import { EmployeeDetailsModal } from '../modals/employee/employee-details-modal'
 import CreateAllowanceModal from '../modals/allowance/create-allowance-modal'
 import EditAllowanceModal from '../modals/allowance/edit-allowance-modal'
 import DeleteAllowanceModal from '../modals/allowance/delete-allowance-modal'
+import CreateDeductionModal from '../modals/deduction/create-deduction-modal'
 
 const ModalProvider = () => {
   const [isMounted,setIsMounted] = useState(false)
@@ -41,6 +42,7 @@ const ModalProvider = () => {
       <CreateAllowanceModal />
       <EditAllowanceModal/>
       <DeleteAllowanceModal />
+      <CreateDeductionModal/>
     </>
   )
 }
