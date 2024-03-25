@@ -1,9 +1,8 @@
 import { EmployeeColumn } from "@/components/layouts/employee/column";
-import { Allowance, Department, Employee, Payroll, Position } from "@prisma/client";
-import { date } from "zod";
+import { Allowance, Deduction, Department, Payroll, Position } from "@prisma/client";
 import { create } from "zustand";
 
-export type ModalType = "createDepartment" | "editDepartment" | "deleteDepartment" | "createPosition" | "editPosition"| "deletePosition" | "createEmployee" | "editEmployee" | "deleteEmployee" | "employeeDetail" | "createAllowance" | "editAllowance" | "deleteAllowance";
+export type ModalType = "createDepartment" | "editDepartment" | "deleteDepartment" | "createPosition" | "editPosition"| "deletePosition" | "createEmployee" | "editEmployee" | "deleteEmployee" | "employeeDetail" | "createAllowance" | "editAllowance" | "deleteAllowance" | "createDeduction" | "editDeduction" | "deleteDeduction";
 
 interface ModalData {
   department?: Department | null
@@ -12,6 +11,7 @@ interface ModalData {
   position?: Position
   employee?: EmployeeColumn
   allowance?: Allowance
+  deduction?:Deduction
   payroll?: Payroll
 }
 
