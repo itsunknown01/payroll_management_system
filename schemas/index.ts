@@ -56,3 +56,12 @@ export const EmployeeSchema = z.object({
         message: "Salary is required"
     })
 })
+
+export const AllowanceSchema = z.object({
+    allowance: z.string().min(1, {
+        message: "Allowance is required"
+    }),
+    description: z.string().min(1, {
+        message: "Description is required"
+    })
+})
