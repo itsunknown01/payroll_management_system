@@ -16,6 +16,7 @@ const EmployeePage = async () => {
   });
 
   const allowances = await db.allowance.findMany();
+  const deductions = await db.deduction.findMany();
 
   const formattedData: EmployeeColumn[] = employees.map((item) => ({
     id: item.id,
@@ -38,6 +39,7 @@ const EmployeePage = async () => {
           departments={departments}
           positions={positions}
           allowances={allowances}
+          deductions={deductions}
         />
       </div>
     </div>

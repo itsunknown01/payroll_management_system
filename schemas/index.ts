@@ -84,3 +84,13 @@ export const EmployeeAllowanceSchema = z.object({
         message: "Salary is required"
     })
 })
+
+export const EmployeeDeductionSchema = z.object({
+    deductionId: z.string().min(1,{
+        message: "Deduction is required"
+    }),
+    salaryType: z.nativeEnum(EmployPayType),
+    amount: z.string().min(1,{
+        message: "Salary is required"
+    })
+})

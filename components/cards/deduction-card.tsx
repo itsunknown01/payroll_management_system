@@ -42,7 +42,9 @@ const DeductionCard = () => {
       .catch((err) => console.log(err));
   }, [employee?.id]);
 
-  const handleDelete = (id: number) => {};
+  const handleDelete = (id: number) => {
+    
+  };
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between bg-zinc-100">

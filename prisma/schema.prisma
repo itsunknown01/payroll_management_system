@@ -186,6 +186,7 @@ model EmployeeDeduction {
   deductionId   Int
   deduction     Deduction     @relation(fields: [deductionId], references: [id])
   salaryType    EmployPayType @default(Once)
+  amount      Float
   deductionDate DateTime
 
   createdAt DateTime @default(now())

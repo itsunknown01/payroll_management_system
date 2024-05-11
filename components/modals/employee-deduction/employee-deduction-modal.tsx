@@ -1,12 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Allowance, EmployPayType } from "@prisma/client";
+import { Deduction, EmployPayType } from "@prisma/client";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { ColumnDef } from "@tanstack/react-table";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
@@ -30,32 +31,34 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { useModal } from "@/hooks/use-modal-store";
-import { getAllowanceById } from "@/lib/utils";
-import { EmployeeAllowanceSchema } from "@/schemas";
+import { getDeductionById } from "@/lib/utils";
+import { EmployeeDeductionSchema } from "@/schemas";
 import CellAction from "./cell-action";
 import { columns } from "./column";
-import { newEmployeeAllowance } from "@/actions/employee-allowance/new-employee-allowance";
+import { newEmployeeDeduction } from "@/actions/employee-deduction/new-employee-deduction";
 
-export type EmployeAllowanceData = {
-  allowanceId: string;
-  allowanceName: string;
+export type EmployeDeductionData = {
+  deductionId: string;
+  deductionName: string;
   salaryType: EmployPayType;
   amount: string;
 };
 
-const EmployeeAllowanceModal = () => {
-  const [employeeData, setEmployeeData] = useState<EmployeAllowanceData[]>([]);
+const EmployeeDeductionModal = () => {
+  const router = useRouter();
+
+  const [employeeData, setEmployeeData] = useState<EmployeDeductionData[]>([]);
   const [loading, startTransition] = useTransition();
 
   const { isOpen, type, onClose, data } = useModal();
-  const { allowances, employee } = data;
+  const { deductions, employee } = data;
 
-  const isModalOpen = isOpen && type == "employeeAllowance";
+  const isModalOpen = isOpen && type == "employeeDeduction";
 
-  const form = useForm<z.infer<typeof EmployeeAllowanceSchema>>({
-    resolver: zodResolver(EmployeeAllowanceSchema),
+  const form = useForm<z.infer<typeof EmployeeDeductionSchema>>({
+    resolver: zodResolver(EmployeeDeductionSchema),
     defaultValues: {
-      allowanceId: "",
+      deductionId: "",
       salaryType: EmployPayType.Once,
       amount: "",
     },
@@ -67,7 +70,7 @@ const EmployeeAllowanceModal = () => {
     setEmployeeData(newArr);
   };
 
-  const newColumns: ColumnDef<EmployeAllowanceData>[] = [
+  const newColumns: ColumnDef<EmployeDeductionData>[] = [
     ...columns,
     {
       id: "action",
@@ -81,12 +84,12 @@ const EmployeeAllowanceModal = () => {
     },
   ];
 
-  const onSubmit = (values: z.infer<typeof EmployeeAllowanceSchema>) => {
+  const onSubmit = (values: z.infer<typeof EmployeeDeductionSchema>) => {
     form.reset();
-    const allowance = getAllowanceById(values.allowanceId, allowances);
-    const newData: EmployeAllowanceData = {
-      allowanceId: JSON.stringify(allowance?.id),
-      allowanceName: allowance?.allowance as string,
+    const deduction = getDeductionById(values.deductionId, deductions);
+    const newData: EmployeDeductionData = {
+      deductionId: JSON.stringify(deduction?.id),
+      deductionName: deduction?.deduction as string,
       salaryType: values.salaryType,
       amount: values.amount,
     };
@@ -98,12 +101,13 @@ const EmployeeAllowanceModal = () => {
     setEmployeeData([]);
 
     startTransition(() => {
-      newEmployeeAllowance(employeeData, employee?.id as number)
+      newEmployeeDeduction(employeeData, employee?.id as number)
         .then((data) => {
           toast.error(data.error);
           if (data.success) {
             toast.success(data.success);
             onClose();
+            router.refresh();
           }
         })
         .catch((err) => console.log(err));
@@ -118,7 +122,7 @@ const EmployeeAllowanceModal = () => {
     <Modal
       isOpen={isModalOpen}
       onClose={onClose}
-      title={`New Allowance for ${name}`}
+      title={`New Deduction for ${name}`}
       className="max-w-3xl"
     >
       <Form {...form}>
@@ -126,11 +130,11 @@ const EmployeeAllowanceModal = () => {
           <div className="space-y-4 px-6">
             <div className="flex items-center gap-x-20">
               <FormField
-                name="allowanceId"
+                name="deductionId"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Allowances</FormLabel>
+                    <FormLabel>Deductions</FormLabel>
                     <Select
                       value={field.value}
                       onValueChange={field.onChange}
@@ -138,16 +142,16 @@ const EmployeeAllowanceModal = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Allowance" />
+                          <SelectValue placeholder="Select Deduction" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {allowances?.map((allowance: Allowance) => (
+                        {deductions?.map((deduction: Deduction) => (
                           <SelectItem
-                            key={allowance.id}
-                            value={JSON.stringify(allowance.id)}
+                            key={deduction.id}
+                            value={JSON.stringify(deduction.id)}
                           >
-                            {allowance.allowance}
+                            {deduction.deduction}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -214,7 +218,7 @@ const EmployeeAllowanceModal = () => {
       <div className="px-6 w-[720px]">
         <DataTable
           data={employeeData}
-          searchkey="allowance"
+          searchkey="deduction"
           columns={newColumns}
         />
       </div>
@@ -228,4 +232,4 @@ const EmployeeAllowanceModal = () => {
   );
 };
 
-export default EmployeeAllowanceModal;
+export default EmployeeDeductionModal;

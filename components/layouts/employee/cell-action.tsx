@@ -10,21 +10,36 @@ interface CellActionProps {
 }
 
 const CellAction = ({ employee }: CellActionProps) => {
-  const { onOpen,data } = useModal();;
+  const { onOpen, data } = useModal();
 
   return (
     <div className="flex gap-2">
       <Button
         onClick={() =>
-          onOpen("employeeDetail", { employee, allowances:data.allowances })
+          onOpen("employeeDetail", {
+            employee,
+            allowances: data.allowances,
+            deductions: data.deductions,
+          })
         }
       >
         <EyeIcon className="w-4 h-4" />
       </Button>
-      <Button onClick={() => onOpen("editEmployee", { employee, departments: data.departments, positions: data.positions })}>
+      <Button
+        onClick={() =>
+          onOpen("editEmployee", {
+            employee,
+            departments: data.departments,
+            positions: data.positions,
+          })
+        }
+      >
         Edit
       </Button>
-      <Button onClick={() => onOpen("deleteEmployee", {employee})} variant="destructive">
+      <Button
+        onClick={() => onOpen("deleteEmployee", { employee })}
+        variant="destructive"
+      >
         Delete
       </Button>
     </div>

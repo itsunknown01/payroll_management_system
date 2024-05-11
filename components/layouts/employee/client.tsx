@@ -1,7 +1,7 @@
 "use client";
 
 import { useModal } from "@/hooks/use-modal-store";
-import { Allowance, Department, Position } from "@prisma/client";
+import { Allowance, Deduction, Department, Position } from "@prisma/client";
 import { Plus } from "lucide-react";
 import { useEffect } from "react";
 import { Button } from "../../ui/button";
@@ -15,6 +15,7 @@ interface EmployeeClientProps {
   positions: Position[];
   departments: Department[];
   allowances: Allowance[];
+  deductions: Deduction[];
 }
 
 const EmployeeClient = ({
@@ -22,14 +23,15 @@ const EmployeeClient = ({
   positions,
   departments,
   allowances,
+  deductions,
 }: EmployeeClientProps) => {
   const { onOpen, setData } = useModal();
 
   useEffect(() => {
-    if (allowances) {
-      setData({ allowances });
+    if (allowances || deductions) {
+      setData({ allowances, deductions });
     }
-  }, [allowances, setData]);
+  }, [allowances, deductions, setData]);
 
   return (
     <div className="w-full">

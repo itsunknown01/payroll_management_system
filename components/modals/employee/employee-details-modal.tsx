@@ -17,7 +17,12 @@ export const EmployeeDetailsModal = () => {
     "";
 
   return (
-    <Modal isOpen={isModalOpen} onClose={onClose} title="Employee Details" className="max-w-4xl">
+    <Modal
+      isOpen={isModalOpen}
+      onClose={onClose}
+      title="Employee Details"
+      className="max-w-4xl"
+    >
       <Card className="w-full rounded-none shadow-none">
         <CardHeader className="space-y-2">
           <h1>

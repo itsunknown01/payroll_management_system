@@ -1,4 +1,4 @@
-import { Allowance } from "@prisma/client";
+import { Allowance, Deduction } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -21,4 +21,11 @@ export const getAllowanceById = (
   allowances: Allowance[] | undefined
 ) => {
   return allowances?.find((allowance) => allowance.id == parseInt(allowanceId));
+};
+
+export const getDeductionById = (
+  deductionId: string,
+  deductions: Deduction[] | undefined
+) => {
+  return deductions?.find((deduction) => deduction.id == parseInt(deductionId));
 };
