@@ -1,7 +1,5 @@
 import LoginForm from "@/components/forms/auth/loginForm";
 import AuthWrapper from "@/components/wrappers/authWrapper";
-import CardWrapper from "@/components/wrappers/cardWrapper";
-import React from "react";
 
 const LoginPage = () => {
   return (

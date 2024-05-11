@@ -1,33 +1,35 @@
 "use client";
 
 import { useModal } from "@/hooks/use-modal-store";
-import { Department, Position } from "@prisma/client";
+import { Allowance, Department, Position } from "@prisma/client";
 import { Plus } from "lucide-react";
+import { useEffect } from "react";
 import { Button } from "../../ui/button";
 import DataTable from "../../ui/data-table";
 import { Separator } from "../../ui/separator";
 import Heading from "../../utils/heading";
 import { EmployeeColumn, columns } from "./column";
-import { useEffect } from "react";
 
 interface EmployeeClientProps {
   data: EmployeeColumn[];
   positions: Position[];
   departments: Department[];
+  allowances: Allowance[];
 }
 
 const EmployeeClient = ({
   data,
   positions,
   departments,
+  allowances,
 }: EmployeeClientProps) => {
   const { onOpen, setData } = useModal();
 
   useEffect(() => {
-    if (positions && departments) {
-      setData({ departments, positions });
+    if (allowances) {
+      setData({ allowances });
     }
-  }, [positions, departments, setData]);
+  }, [allowances, setData]);
 
   return (
     <div className="w-full">
@@ -45,7 +47,7 @@ const EmployeeClient = ({
       </div>
 
       <Separator />
-      <DataTable data={data} columns={columns} searchkey="name" />
+      <DataTable data={data} columns={columns} searchkey={"firstName"} />
     </div>
   );
 };

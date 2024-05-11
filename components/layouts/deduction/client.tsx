@@ -29,7 +29,7 @@ const DeductionClient = ({ data }: DeductionClientProps) => {
       </div>
 
       <Separator />
-      <DataTable data={data} columns={columns} searchkey="name" />
+      <DataTable data={data} columns={columns} searchkey="info" />
     </div>
   );
 };

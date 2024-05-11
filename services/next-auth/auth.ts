@@ -49,7 +49,6 @@ export const {
         session.user.email = token.email as string
         session.user.isOAuth = token.isOAuth as boolean
       }
-
       return session;
     },
     async jwt({ token }) {

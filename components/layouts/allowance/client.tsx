@@ -30,7 +30,7 @@ const AllowanceClient = ({ data }: AllowanceClientProps) => {
       </div>
 
       <Separator />
-      <DataTable data={data} columns={columns} searchkey="name" />
+      <DataTable data={data} columns={columns} searchkey="info" />
     </div>
   );
 };

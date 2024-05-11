@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <Sidebar />
         <ModalProvider />
         <div className="mt-16 w-full">{children}</div>
-      </div>
+      </div>  
     </div>
   );
 };

@@ -16,7 +16,7 @@ const CellAction = ({ employee }: CellActionProps) => {
     <div className="flex gap-2">
       <Button
         onClick={() =>
-          onOpen("employeeDetail", { employee })
+          onOpen("employeeDetail", { employee, allowances:data.allowances })
         }
       >
         <EyeIcon className="w-4 h-4" />

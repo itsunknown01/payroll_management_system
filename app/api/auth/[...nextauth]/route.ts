@@ -1,1 +1,1 @@
-export {GET,POST} from "@/services/next-auth/auth"
+export { GET, POST } from "@/services/next-auth/auth";

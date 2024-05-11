@@ -69,6 +69,7 @@ model PasswordResetToken {
 // dashboard database
 model Department {
   id        Int        @id @unique @default(autoincrement())
+  userId    String
   name      String
   positions Position[]
   employees Employee[]
@@ -84,7 +85,7 @@ model Position {
 
 model Employee {
   id           Int        @id @unique @default(autoincrement())
-  employee_no  String        @unique
+  employee_no  String     @unique
   firstName    String
   middleName   String?
   lastName     String
@@ -163,16 +164,19 @@ enum EmployPayType {
 }
 
 model EmployeeAllowance {
-  id            Int           @id @unique @default(autoincrement())
-  employeeId    Int
-  employee      Employee      @relation(fields: [employeeId], references: [id])
-  allowanceId   Int
-  allowance     Allowance     @relation(fields: [allowanceId], references: [id])
-  salaryType    EmployPayType @default(Once)
+  id          Int           @id @unique @default(autoincrement())
+  employeeId  Int
+  employee    Employee      @relation(fields: [employeeId], references: [id])
+  allowanceId Int
+  allowance   Allowance     @relation(fields: [allowanceId], references: [id])
+  salaryType  EmployPayType @default(Once)
+  amount      Float
   allowanceDate DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([employeeId, allowanceId])
 }
 
 model EmployeeDeduction {
