@@ -26,7 +26,8 @@ export type ModalType =
   | "editDeduction"
   | "deleteDeduction"
   | "employeeAllowance"
-  | "employeeDeduction";
+  | "employeeDeduction"
+  | "createPayroll";
 
 interface ModalData {
   department?: Department | null;

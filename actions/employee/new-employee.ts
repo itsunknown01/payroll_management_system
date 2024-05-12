@@ -16,7 +16,6 @@ export const newEmployee = async (values: z.infer<typeof EmployeeSchema>) => {
 
   const date = new Date();
   const presentDate = `${date.getFullYear()}-${Math.floor(Math.random()*10000)}`;
-  console.log(presentDate);
   
   await db.employee.create({
     data: {

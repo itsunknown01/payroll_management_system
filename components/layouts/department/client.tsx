@@ -2,7 +2,7 @@
 
 import { Plus } from "lucide-react";
 import { Button } from "../../ui/button";
-import Heading from "../../utils/heading";
+import Heading from "../../ui/heading";
 import { Separator } from "../../ui/separator";
 import DataTable from "../../ui/data-table";
 import { columns } from "./column";

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { Button } from "../../ui/button";
 import DataTable from "../../ui/data-table";
 import { Separator } from "../../ui/separator";
-import Heading from "../../utils/heading";
+import Heading from "../../ui/heading";
 import { EmployeeColumn, columns } from "./column";
 
 interface EmployeeClientProps {

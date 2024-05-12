@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { Button } from "../../ui/button";
 import DataTable from "../../ui/data-table";
 import { Separator } from "../../ui/separator";
-import Heading from "../../utils/heading";
+import Heading from "../../ui/heading";
 import { PositionColumn, columns } from "./column";
 import { useEffect } from "react";
 

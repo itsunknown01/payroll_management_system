@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import Heading from "@/components/utils/heading";
+import Heading from "@/components/ui/heading";
 import { auth } from "@/services/next-auth/auth";
 
 export default async function Home() {

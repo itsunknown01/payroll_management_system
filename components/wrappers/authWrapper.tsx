@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import CardWrapper, { CardWrapperProps } from "@/components/wrappers/cardWrapper";
-import Heading from "@/components/utils/heading";
+import Heading from "@/components/ui/heading";
 import SocialLogin from "../buttons/socialLogin";
 
 interface AuthWrapperProps extends CardWrapperProps {
