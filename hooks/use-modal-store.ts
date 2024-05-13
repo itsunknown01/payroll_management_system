@@ -3,6 +3,7 @@ import {
   Allowance,
   Deduction,
   Department,
+  Employee,
   Payroll,
   Position,
 } from "@prisma/client";
@@ -27,7 +28,9 @@ export type ModalType =
   | "deleteDeduction"
   | "employeeAllowance"
   | "employeeDeduction"
-  | "createPayroll";
+  | "createPayroll"
+  | "createAttendance"
+  ;
 
 interface ModalData {
   department?: Department | null;
@@ -35,6 +38,7 @@ interface ModalData {
   positions?: Position[];
   position?: Position;
   employee?: EmployeeColumn;
+  employees?: Employee[]
   allowance?: Allowance;
   allowances?: Allowance[];
   deduction?: Deduction;

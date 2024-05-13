@@ -1,4 +1,4 @@
-import { Allowance, Deduction } from "@prisma/client";
+import { Allowance, Deduction, Employee } from "@prisma/client";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -32,8 +32,18 @@ export const getDeductionById = (
 
 export const formatDate = (dateString: Date) => {
   const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const date = new Date(dateString);
@@ -42,4 +52,17 @@ export const formatDate = (dateString: Date) => {
   const year = date.getFullYear();
 
   return `${month} ${day}, ${year}`;
+};
+
+export const getEmployeeName = (
+  employeeId: string,
+  employees: Employee[] | undefined
+) => {
+  const employee = employees?.find(
+    (employee) => employee.id == parseInt(employeeId)
+  );
+  
+  let name = `${employee?.lastName}, ${employee?.firstName} ${employee?.middleName} | ${employee?.employee_no}`;
+
+  return employee ? name : "";
 };

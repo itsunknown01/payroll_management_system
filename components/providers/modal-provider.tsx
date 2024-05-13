@@ -20,6 +20,7 @@ import DeleteDeductionModal from '../modals/deduction/delete-deduction-modal'
 import EmployeeAllowanceModal from '../modals/employee-allowance/employee-allowance-modal'
 import EmployeeDeductionModal from '../modals/employee-deduction/employee-deduction-modal'
 import CreatePayrollModal from '../modals/payroll/create-payroll-modal'
+import CreateAttendanceModal from '../modals/attendance/create-attendance-modal'
 
 const ModalProvider = () => {
   const [isMounted,setIsMounted] = useState(false)
@@ -34,25 +35,39 @@ const ModalProvider = () => {
 
   return (
     <>
+      {/* Department */}
       <CreateDepartmentModal />
       <EditDepartmentModal />
       <DeleteDepartmentModal />
+      
+      {/* Positon */}
       <CreatePositionModal />
       <EditPositionModal />
       <DeletePositionModal/>
+      
+      {/* Employee */}
       <CreateEmployeeModal />
       <EditEmployeeModal/>
       <DeleteEmployeeModal/>
       <EmployeeDetailsModal />
+      <EmployeeAllowanceModal/>
+      <EmployeeDeductionModal />
+      
+      {/* Allowance */}
       <CreateAllowanceModal />
       <EditAllowanceModal/>
       <DeleteAllowanceModal />
+
+      {/* Deduction */}
       <CreateDeductionModal/>
       <EditDeductionModal />
       <DeleteDeductionModal/>
-      <EmployeeAllowanceModal/>
-      <EmployeeDeductionModal />
+
+      {/* Payroll */}
       <CreatePayrollModal/>
+ 
+      {/* Attedance */}
+      <CreateAttendanceModal />
     </>
   )
 }

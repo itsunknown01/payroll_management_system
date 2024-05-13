@@ -1,4 +1,4 @@
-import { EmployPayType, PayType } from "@prisma/client";
+import { EmployPayType, Logs, PayType } from "@prisma/client";
 import * as z from "zod";
 
 export const LoginSchema = z.object({
@@ -104,3 +104,13 @@ export const PayrollSchema = z.object({
   }),
   type: z.nativeEnum(PayType),
 });
+
+export const AttendanceSchema = z.object({
+  employeeId: z.string().min(1,{
+    message: "Employee is required"
+  }),
+  type: z.nativeEnum(Logs),
+  date: z.string().min(1,{
+    message: "Date is required"
+  })
+})
