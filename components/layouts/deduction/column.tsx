@@ -4,6 +4,7 @@ import DeductionInfo from "./deduction-info"
 
 export interface DeductionColumn {
     id: number
+    name: string
     info: {
         deduction: string
         description: string
@@ -14,6 +15,10 @@ export const columns: ColumnDef<DeductionColumn>[] = [
     {
         accessorKey: "id",
         header: "#"
+    },
+    {
+        accessorKey: "name",
+        header: "Deduction",
     },
     {
         accessorKey: "info",

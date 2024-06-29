@@ -2,8 +2,7 @@
 
 import { useModal } from "@/hooks/use-modal-store";
 import { Button } from "../../ui/button";
-import { EyeIcon } from "lucide-react";
-import { Payroll } from "@prisma/client";
+import { Edit, EyeIcon, Trash } from "lucide-react";
 import { PayrollColumn } from "./column";
 
 interface CellActionProps {
@@ -39,13 +38,13 @@ const CellAction = ({ payroll }: CellActionProps) => {
       //   })
       // }
       >
-        Edit
+        <Edit className="h-4 w-4" />
       </Button>
       <Button
         // onClick={() => onOpen("deletePayroll", { payroll })}
         variant="destructive"
       >
-        Delete
+        <Trash className="h-4 w-4" />
       </Button>
     </div>
   );

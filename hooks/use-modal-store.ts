@@ -1,3 +1,4 @@
+import { AttendanceColumn } from "@/components/layouts/attendance/column";
 import { EmployeeColumn } from "@/components/layouts/employee/column";
 import {
   Allowance,
@@ -5,7 +6,7 @@ import {
   Department,
   Employee,
   Payroll,
-  Position,
+  Position
 } from "@prisma/client";
 import { create } from "zustand";
 
@@ -44,6 +45,7 @@ interface ModalData {
   deduction?: Deduction;
   deductions?: Deduction[];
   payroll?: Payroll;
+  attendance?: AttendanceColumn
 }
 
 interface ModalStore {

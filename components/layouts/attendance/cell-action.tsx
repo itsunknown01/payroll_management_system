@@ -1,46 +1,24 @@
 "use client";
 
 import { useModal } from "@/hooks/use-modal-store";
+import { Edit, EyeIcon, Trash } from "lucide-react";
 import { Button } from "../../ui/button";
-import { EmployeeColumn } from "./column";
-import { EyeIcon } from "lucide-react";
+import { AttendanceColumn } from "./column";
 
 interface CellActionProps {
-  employee: EmployeeColumn;
+  attendance: AttendanceColumn;
 }
 
-const CellAction = ({ employee }: CellActionProps) => {
+const CellAction = ({ attendance }: CellActionProps) => {
   const { onOpen, data } = useModal();
 
   return (
     <div className="flex gap-2">
       <Button
-        onClick={() =>
-          onOpen("employeeDetail", {
-            employee,
-            allowances: data.allowances,
-            deductions: data.deductions,
-          })
-        }
-      >
-        <EyeIcon className="w-4 h-4" />
-      </Button>
-      <Button
-        onClick={() =>
-          onOpen("editEmployee", {
-            employee,
-            departments: data.departments,
-            positions: data.positions,
-          })
-        }
-      >
-        Edit
-      </Button>
-      <Button
-        onClick={() => onOpen("deleteEmployee", { employee })}
+        onClick={() => onOpen("deleteEmployee", { attendance })}
         variant="destructive"
       >
-        Delete
+        <Trash className="w-4 h-4" />
       </Button>
     </div>
   );

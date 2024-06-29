@@ -37,7 +37,7 @@ const PayrollClient = ({ data }: PayrollClientProps) => {
       </div>
 
       <Separator />
-      <DataTable data={data} columns={columns} searchkey={"firstName"} />
+      <DataTable data={data} columns={columns} searchkey={"refNo"} />
     </div>
   );
 };

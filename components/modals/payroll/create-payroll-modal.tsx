@@ -138,7 +138,7 @@ const CreatePayrollModal = () => {
             <Button type="submit" disabled={loading}>
               Save
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button type="button" onClick={onClose}>Cancel</Button>
           </DialogFooter>
         </form>
       </Form>

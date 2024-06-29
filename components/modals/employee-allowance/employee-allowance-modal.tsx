@@ -222,7 +222,7 @@ const EmployeeAllowanceModal = () => {
         <Button disabled={loading} onClick={submitData}>
           Save
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button type="button" onClick={onClose}>Cancel</Button>
       </DialogFooter>
     </Modal>
   );

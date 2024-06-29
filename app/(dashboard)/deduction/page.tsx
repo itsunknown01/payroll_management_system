@@ -8,6 +8,7 @@ const DeductionPage = async () => {
 
   const formattedData: DeductionColumn[] = deductions.map((item) => ({
     id: item.id,
+    name: item.deduction,
     info: {
       deduction: item.deduction,
       description: item.description

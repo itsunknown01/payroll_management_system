@@ -3,7 +3,14 @@
 import { editDeduction } from "@/actions/deduction/edit-deduction";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import Modal from "@/components/ui/modal";
 import { useModal } from "@/hooks/use-modal-store";
@@ -18,33 +25,33 @@ import * as z from "zod";
 const EditDeductionModal = () => {
   const [loading, startTransition] = useTransition();
   const router = useRouter();
-  const { isOpen, type, onClose,data } = useModal();
+  const { isOpen, type, onClose, data } = useModal();
 
   const isModalOpen = isOpen && type == "editDeduction";
-  const {deduction} = data
+  const { deduction } = data;
 
   const form = useForm<z.infer<typeof DeductionSchema>>({
     resolver: zodResolver(DeductionSchema),
     defaultValues: {
       deduction: "",
-      description: ""
+      description: "",
     },
   });
 
-  useEffect(()=>{
-    if(deduction) {
-      form.setValue("deduction", deduction.deduction)
-      form.setValue("description", deduction.description)
+  useEffect(() => {
+    if (deduction) {
+      form.setValue("deduction", deduction.deduction);
+      form.setValue("description", deduction.description);
     }
-  },[form,deduction])
+  }, [form, deduction]);
 
   const OnSubmit = async (values: z.infer<typeof DeductionSchema>) => {
     form.reset();
     startTransition(() => {
-        editDeduction(values,deduction?.id).then((data)=> {
-          toast.error(data.error)
-          toast.success(data.success)
-        });
+      editDeduction(values, deduction?.id).then((data) => {
+        toast.error(data.error);
+        toast.success(data.success);
+      });
     });
     router.refresh();
     onClose();
@@ -100,7 +107,7 @@ const EditDeductionModal = () => {
             <Button type="submit" disabled={loading}>
               Update
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button type="button" onClick={onClose}>Cancel</Button>
           </DialogFooter>
         </form>
       </Form>

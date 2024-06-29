@@ -54,7 +54,7 @@ const EditEmployeeModal = () => {
   useEffect(() => {
     if (employee) {
       form.setValue("firstname", employee.firstName);
-      form.setValue("middlename", employee.middleName);
+      form.setValue("middlename", employee.middleName as string);
       form.setValue("lastname", employee.lastName);
       form.setValue("departmentId", String(employee.departmentId));
       form.setValue("positionId", String(employee.positionId));
@@ -229,7 +229,7 @@ const EditEmployeeModal = () => {
             <Button type="submit" disabled={loading}>
               Update
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button type="button" onClick={onClose}>Cancel</Button>
           </DialogFooter>
         </form>
       </Form>

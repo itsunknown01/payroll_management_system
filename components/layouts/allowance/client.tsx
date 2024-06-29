@@ -1,13 +1,12 @@
 "use client";
 
+import { useModal } from "@/hooks/use-modal-store";
 import { Plus } from "lucide-react";
 import { Button } from "../../ui/button";
+import DataTable from "../../ui/data-table";
 import Heading from "../../ui/heading";
 import { Separator } from "../../ui/separator";
-import DataTable from "../../ui/data-table";
 import { AllowanceColumn, columns } from "./column";
-import { Allowance } from "@prisma/client";
-import { useModal } from "@/hooks/use-modal-store";
 
 interface AllowanceClientProps {
   data: AllowanceColumn[];
@@ -30,7 +29,7 @@ const AllowanceClient = ({ data }: AllowanceClientProps) => {
       </div>
 
       <Separator />
-      <DataTable data={data} columns={columns} searchkey="info" />
+      <DataTable data={data} columns={columns} searchkey="name" />
     </div>
   );
 };

@@ -2,27 +2,29 @@ import AttendanceClient from "@/components/layouts/attendance/client";
 import { AttendanceColumn } from "@/components/layouts/attendance/column";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import { Attendance, Logs } from "@prisma/client";
 import React from "react";
+import { date } from "zod";
 
 const AttendancePage = async () => {
   const attendances = await db.attendance.findMany({
     include: {
       employee: true,
     },
+    orderBy: {
+      datetimeLog: "asc",
+    },
   });
 
   const employees = await db.employee.findMany();
 
-  let formattedData: AttendanceColumn[] = attendances.map((attendance) => ({
-    id: attendance.id,
-    date: formatDate(attendance.datetimeLog),
-    employeeNo: attendance.employee.employee_no,
-    employeeName: `${attendance.employee.lastName}, ${attendance.employee.firstName} ${attendance.employee.middleName}`,
-  }));
   return (
     <div className="w-full">
       <div className="flex-1 space-y-2 pt-6 p-8 w-full">
-        <AttendanceClient data={formattedData} employees={employees} />
+        <AttendanceClient
+          data={attendances}
+          employees={employees}
+        />
       </div>
     </div>
   );

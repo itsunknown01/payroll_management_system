@@ -8,6 +8,7 @@ const AllowancePage = async () => {
 
   const formattedData: AllowanceColumn[] = allowances.map((item)=> ({
     id: item.id,
+    name: item.allowance,
     info: {
       allowance: item.allowance,
       description: item.description

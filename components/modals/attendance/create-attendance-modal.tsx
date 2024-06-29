@@ -83,7 +83,7 @@ const CreateAttendanceModal = () => {
         <Button disabled={loading} onClick={submitAttendance}>
           Save
         </Button>
-        <Button onClick={onClose}>Cancel</Button>
+        <Button type="button" onClick={onClose}>Cancel</Button>
       </DialogFooter>
     </Modal>
   );

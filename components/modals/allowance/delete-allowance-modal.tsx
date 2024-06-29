@@ -41,7 +41,7 @@ const DeleteAllowanceModal = () => {
           >
             Confirm
           </Button>
-          <Button disabled={loading} variant="outline" onClick={onClose}>
+          <Button type="button" disabled={loading} variant="outline" onClick={onClose}>
             Cancel
           </Button>
         </DialogFooter>

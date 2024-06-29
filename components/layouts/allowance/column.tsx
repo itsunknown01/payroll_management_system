@@ -5,6 +5,7 @@ import AllowanceInfo from "./allowance-info"
 
 export interface AllowanceColumn {
     id: number
+    name: string
     info: {
         allowance: string
         description: string
@@ -15,6 +16,10 @@ export const columns: ColumnDef<AllowanceColumn>[] = [
     {
         accessorKey: "id",
         header: "#"
+    },
+    {
+        accessorKey: "name",
+        header: "Allowance"
     },
     {
         accessorKey: "info",

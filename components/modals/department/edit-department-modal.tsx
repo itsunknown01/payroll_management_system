@@ -89,7 +89,7 @@ const EditDepartmentModal = () => {
             <Button type="submit" disabled={loading}>
               Update
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button type="button" onClick={onClose}>Cancel</Button>
           </DialogFooter>
         </form>
       </Form>
