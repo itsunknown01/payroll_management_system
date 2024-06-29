@@ -12,7 +12,7 @@ const CellLogs = ({ attendance }: CellLogsProps) => {
   const { onOpen } = useModal();
   return (
     <div className="space-y-2">
-      {attendance.logTime?.map((log, index) => (
+      {attendance.logTime?.map((log:any, index:any) => (
         <div className="flex items-center justify-between" key={index}>
           <span className="text-sm text-gray-800">{log.type}</span>
           <span className="text-sm text-gray-600">{log.time}</span>
