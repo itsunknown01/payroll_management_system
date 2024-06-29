@@ -27,7 +27,7 @@ const AttendanceClient = ({ data, employees }: AttendanceClientProps) => {
   }, [employees, setData]);
 
   const formattedData = useMemo(() => {
-    const logTypeMap: Record<Logs, string> = {
+    const logTypeMap: any = {
       [Logs.AM_IN]: "Time-in AM",
       [Logs.PM_IN]: "Time-in PM",
       [Logs.AM_OUT]: "Time-out AM",
@@ -38,11 +38,11 @@ const AttendanceClient = ({ data, employees }: AttendanceClientProps) => {
     data.forEach((row) => {
       const date = new Date(row.datetimeLog).toISOString().split("T")[0];
       const existingRecord = processedData.find(
-        (record) => record.eid === row.employeeId && record.date === date
+        (record: any) => record.eid === row.employeeId && record.date === date
       );
 
       if (existingRecord) {
-        if (!existingRecord.log.some((log) => log.logType === row.logType)) {
+        if (!existingRecord.log.some((log:any) => log.logType === row.logType)) {
           existingRecord.log.push({
             id: row.id,
             datetimeLog: row.datetimeLog,
@@ -67,7 +67,7 @@ const AttendanceClient = ({ data, employees }: AttendanceClientProps) => {
       }
     });
 
-    return processedData.map((record) => ({
+    return processedData.map((record: any) => ({
       date: new Date(record.date).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
@@ -75,12 +75,12 @@ const AttendanceClient = ({ data, employees }: AttendanceClientProps) => {
       }),
       employeeNo: record.eno,
       employeeName: record.name,
-      logTime: record.log.map((log) => ({
+      logTime: record.log.map((log: any) => ({
         time: new Date(log.datetimeLog).toLocaleTimeString("en-US", {
           hour: "2-digit",
           minute: "2-digit",
         }),
-        type: logTypeMap[log.logType],
+        type: logTypeMap[log.logType] as any,
       })),
       eid: record.eid,
       id: record.id,
