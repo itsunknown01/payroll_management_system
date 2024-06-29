@@ -1,4 +1,4 @@
-import { StatusType } from "@prisma/client";
+import { PayType, StatusType } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import CellAction from "./cell-action";
 
@@ -8,6 +8,7 @@ export interface PayrollColumn {
     From: string;
     To: string;
     status: StatusType;
+    type: PayType
 } 
 
 export const columns: ColumnDef<PayrollColumn>[] = [

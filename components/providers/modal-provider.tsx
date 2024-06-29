@@ -21,6 +21,8 @@ import EmployeeAllowanceModal from '../modals/employee-allowance/employee-allowa
 import EmployeeDeductionModal from '../modals/employee-deduction/employee-deduction-modal'
 import CreatePayrollModal from '../modals/payroll/create-payroll-modal'
 import CreateAttendanceModal from '../modals/attendance/create-attendance-modal'
+import EditPayrollModal from '../modals/payroll/edit-payroll-modal'
+import DeletePayrollModal from '../modals/payroll/delete-payroll-modal'
 
 const ModalProvider = () => {
   const [isMounted,setIsMounted] = useState(false)
@@ -65,6 +67,8 @@ const ModalProvider = () => {
 
       {/* Payroll */}
       <CreatePayrollModal/>
+      <EditPayrollModal />
+      <DeletePayrollModal />
  
       {/* Attedance */}
       <CreateAttendanceModal />

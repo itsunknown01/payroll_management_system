@@ -95,6 +95,7 @@ model Employee {
   position     Position   @relation(fields: [positionId], references: [id])
   salary       Int
 
+  payrollLists PayrollList[]
   employeeAllowance EmployeeAllowance[]
   employeeDeduction EmployeeDeduction[]
   attendances       Attendance[]
@@ -143,6 +144,8 @@ model PayrollList {
   id              Int     @id @unique @default(autoincrement())
   payrollId       Int
   payroll         Payroll @relation(fields: [payrollId], references: [id])
+  employeeId      Int
+  employee        Employee @relation(fields: [employeeId], references: [id])
   present         Int
   absent          Int
   late            String

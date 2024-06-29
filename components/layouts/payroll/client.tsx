@@ -18,10 +18,22 @@ import { PayrollColumn, columns } from "./column";
 
 interface PayrollClientProps {
   data: PayrollColumn[];
+  positions: Position[];
+  departments: Department[];
 }
 
-const PayrollClient = ({ data }: PayrollClientProps) => {
+const PayrollClient = ({
+  data,
+  positions,
+  departments,
+}: PayrollClientProps) => {
   const { onOpen, setData } = useModal();
+
+  useEffect(() => {
+    if (positions || departments) {
+      setData({ positions, departments });
+    }
+  }, [departments, positions, setData]);
 
   return (
     <div className="w-full">

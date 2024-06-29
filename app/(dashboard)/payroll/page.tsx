@@ -11,13 +11,18 @@ const PayrollPage = async () => {
     refNo: item.refNo,
     From: formatDate(item.From),
     To: formatDate(item.To),
-    status: item.status
+    status: item.status,
+    type: item.type
   }))
+
+  const departments = await db.department.findMany();
+
+  const positions = await db.position.findMany()
 
   return (
     <div className="w-full">
       <div className="flex-1 space-y-2 pt-6 p-8 w-full">
-        <PayrollClient data={formattedData} />
+        <PayrollClient data={formattedData} departments={departments} positions={positions} />
       </div>
     </div>
   );
