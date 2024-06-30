@@ -42,7 +42,9 @@ const AttendanceClient = ({ data, employees }: AttendanceClientProps) => {
       );
 
       if (existingRecord) {
-        if (!existingRecord.log.some((log:any) => log.logType === row.logType)) {
+        if (
+          !existingRecord.log.some((log: any) => log.logType === row.logType)
+        ) {
           existingRecord.log.push({
             id: row.id,
             datetimeLog: row.datetimeLog,

@@ -1,11 +1,11 @@
 "use client";
 
 import { useModal } from "@/hooks/use-modal-store";
+import { Department } from "@prisma/client";
 import { Button } from "../../ui/button";
-import { DepartmentColumn } from "./column";
 
 interface CellActionProps {
-  data: DepartmentColumn;
+  data: Department;
 }
 
 const CellAction = ({ data }: CellActionProps) => {

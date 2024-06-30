@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
-import { EmployeAllowanceData } from "./employee-deduction-modal";
+import { EmployeDeductionData } from "./employee-deduction-modal";
 
 interface CellActionProps {
-  data: EmployeAllowanceData;
+  data: EmployeDeductionData;
   onDelete: () => void;
 }
 
