@@ -13,13 +13,9 @@ const CellAction = ({ payroll }: CellActionProps) => {
   const { onOpen } = useModal();
   return (
     <div className="flex gap-2">
-        <Button
-          onClick={() =>
-            onOpen("viewPayroll")
-          }
-        >
-          <EyeIcon className="w-4 h-4 mr-2" /> View
-        </Button>
+      <Button onClick={() => onOpen("viewPayroll",{payrollList: payroll})}>
+        <EyeIcon className="w-4 h-4" />
+      </Button>
     </div>
   );
 };
