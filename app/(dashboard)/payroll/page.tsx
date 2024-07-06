@@ -2,9 +2,17 @@ import PayrollClient from "@/components/layouts/payroll/client";
 import { PayrollColumn } from "@/components/layouts/payroll/column";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import { auth } from "@/services/next-auth/auth";
 
 const PayrollPage = async () => {
-  const payroll = await db.payroll.findMany();
+  const session = await auth();
+  const userId = session?.user.id;
+
+  const payroll = await db.payroll.findMany({
+    where: {
+      userId,
+    },
+  });
 
   const formattedData: PayrollColumn[] = payroll.map((item) => ({
     id: item.id,
@@ -12,17 +20,29 @@ const PayrollPage = async () => {
     From: formatDate(item.From),
     To: formatDate(item.To),
     status: item.status,
-    type: item.type
-  }))
+    type: item.type,
+  }));
 
-  const departments = await db.department.findMany();
+  const departments = await db.department.findMany({
+    where: {
+      userId,
+    },
+  });
 
-  const positions = await db.position.findMany()
+  const positions = await db.position.findMany({
+    where: {
+      userId,
+    },
+  });
 
   return (
     <div className="w-full">
       <div className="flex-1 space-y-2 pt-6 p-8 w-full">
-        <PayrollClient data={formattedData} departments={departments} positions={positions} />
+        <PayrollClient
+          data={formattedData}
+          departments={departments}
+          positions={positions}
+        />
       </div>
     </div>
   );

@@ -2,10 +2,14 @@
 
 import { db } from "@/lib/db";
 import { PositionSchema } from "@/schemas"
+import { auth } from "@/services/next-auth/auth";
 import { getPositionByName } from "@/services/position";
 import * as z from "zod"
 
 export const newPosition = async (values: z.infer<typeof PositionSchema>) => {
+  const session = await auth();
+  const userId: string = session?.user.id as string;
+
     const validation = PositionSchema.safeParse(values);
 
     if (!validation.success) {
@@ -23,6 +27,7 @@ export const newPosition = async (values: z.infer<typeof PositionSchema>) => {
   
     await db.position.create({
       data: {
+        userId,
         name,
         departmentId: deptId
       },

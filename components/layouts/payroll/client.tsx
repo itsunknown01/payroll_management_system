@@ -28,7 +28,7 @@ const PayrollClient = ({
   departments,
 }: PayrollClientProps) => {
   const { onOpen, setData } = useModal();
-
+  
   useEffect(() => {
     if (positions || departments) {
       setData({ positions, departments });

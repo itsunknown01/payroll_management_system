@@ -11,6 +11,7 @@ const RegisterPage = () => {
     backButtonLink='/login'
     backButtonTitle='Already have an account'
     showSocial
+    image
     >
       <RegisterForm />
     </AuthWrapper>

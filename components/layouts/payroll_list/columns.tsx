@@ -1,4 +1,4 @@
-import { Payroll } from "@prisma/client";
+import { Employee, Payroll } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 
 import CellAction from "./cell-action";
@@ -11,8 +11,9 @@ export interface PayrollListColumn {
     totalAllowance: number
     tottalDeduction: number
     net: number
-    payroll?: Payroll
-} 
+    payroll?: Payroll,
+    employee?: Employee
+  } 
 
 export const columns: ColumnDef<PayrollListColumn>[] = [
     {

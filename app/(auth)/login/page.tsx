@@ -9,6 +9,7 @@ const LoginPage = () => {
       backButtonLink="/register"
       backButtonTitle="Don't have an account"
       showSocial
+      image
     >
       <LoginForm />
     </AuthWrapper>

@@ -1,25 +1,48 @@
 import EmployeeClient from "@/components/layouts/employee/client";
 import { EmployeeColumn } from "@/components/layouts/employee/column";
 import { db } from "@/lib/db";
+import { auth } from "@/services/next-auth/auth";
 import React from "react";
 
 const EmployeePage = async () => {
-  const departments = await db.department.findMany();
+  const session = await auth();
+  const userId = session?.user.id;
 
-  const positions = await db.position.findMany();
+  const departments = await db.department.findMany({
+    where: {
+      userId,
+    },
+  });
+
+  const positions = await db.position.findMany({
+    where: {
+      userId,
+    },
+  });
 
   const employees = await db.employee.findMany({
+    where: {
+      userId,
+    },
     include: {
       department: true,
       position: true,
     },
   });
 
-  const allowances = await db.allowance.findMany();
-  const deductions = await db.deduction.findMany();
-
+  const allowances = await db.allowance.findMany({
+    where: {
+      userId,
+    },
+  });
+  const deductions = await db.deduction.findMany({
+    where: {
+      userId,
+    },
+  });
   const formattedData: EmployeeColumn[] = employees.map((item) => ({
     id: item.id,
+    userId: item.userId,
     employee_no: item.employee_no,
     firstName: item.firstName,
     middleName: item.middleName,

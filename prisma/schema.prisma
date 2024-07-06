@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -26,7 +20,15 @@ model User {
   image         String?
   password      String?   @unique
   role          UserRole  @default(USER)
-  accounts      Account[]
+
+  accounts    Account[]
+  departments Department[]
+  position    Position[]
+  employees   Employee[]
+  payrolls    Payroll[]
+  allowances  Allowance[]
+  deductions  Deduction[]
+  attendances Attendance[]
 }
 
 model Account {
@@ -69,33 +71,46 @@ model PasswordResetToken {
 // dashboard database
 model Department {
   id        Int        @id @unique @default(autoincrement())
-  userId    String
   name      String
   positions Position[]
   employees Employee[]
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model Position {
-  id           Int        @id @unique @default(autoincrement())
-  departmentId Int
-  department   Department @relation(fields: [departmentId], references: [id])
+  id           Int    @id @unique @default(autoincrement())
   name         String
-  employees    Employee[]
+  departmentId Int
+  userId       String
+
+  department Department @relation(fields: [departmentId], references: [id])
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  employees Employee[]
+
+  @@index([userId])
 }
 
 model Employee {
-  id           Int        @id @unique @default(autoincrement())
-  employee_no  String     @unique
-  firstName    String
-  middleName   String?
-  lastName     String
-  departmentId Int
-  department   Department @relation(fields: [departmentId], references: [id])
-  positionId   Int
-  position     Position   @relation(fields: [positionId], references: [id])
-  salary       Int
+  id          Int     @id @unique @default(autoincrement())
+  employee_no String  @unique
+  firstName   String
+  middleName  String?
+  lastName    String
+  salary      Int
 
-  payrollLists PayrollList[]
+  userId       String
+  departmentId Int
+  positionId   Int
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  department   Department @relation(fields: [departmentId], references: [id])
+  position     Position   @relation(fields: [positionId], references: [id])
+
+  payrollLists      PayrollList[]
   employeeAllowance EmployeeAllowance[]
   employeeDeduction EmployeeDeduction[]
   attendances       Attendance[]
@@ -112,10 +127,13 @@ enum StatusType {
 }
 
 model Payroll {
-  id           Int           @id @unique @default(autoincrement())
-  refNo        String        @unique
-  From         DateTime
-  To           DateTime
+  id     Int      @id @unique @default(autoincrement())
+  refNo  String   @unique
+  From   DateTime
+  To     DateTime
+  userId String
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   type         PayType       @default(Monthly)
   status       StatusType    @default(New)
   payrollLists PayrollList[]
@@ -129,6 +147,9 @@ model Deduction {
   deduction   String
   description String
 
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   employeeDeduction EmployeeDeduction[]
 }
 
@@ -137,13 +158,16 @@ model Allowance {
   allowance   String
   description String
 
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   employeeAllowance EmployeeAllowance[]
 }
 
 model PayrollList {
-  id              Int     @id @unique @default(autoincrement())
+  id              Int      @id @unique @default(autoincrement())
   payrollId       Int
-  payroll         Payroll @relation(fields: [payrollId], references: [id])
+  payroll         Payroll  @relation(fields: [payrollId], references: [id])
   employeeId      Int
   employee        Employee @relation(fields: [employeeId], references: [id])
   present         Int
@@ -167,13 +191,13 @@ enum EmployPayType {
 }
 
 model EmployeeAllowance {
-  id          Int           @id @unique @default(autoincrement())
-  employeeId  Int
-  employee    Employee      @relation(fields: [employeeId], references: [id])
-  allowanceId Int
-  allowance   Allowance     @relation(fields: [allowanceId], references: [id])
-  salaryType  EmployPayType @default(Once)
-  amount      Float
+  id            Int           @id @unique @default(autoincrement())
+  employeeId    Int
+  employee      Employee      @relation(fields: [employeeId], references: [id])
+  allowanceId   Int
+  allowance     Allowance     @relation(fields: [allowanceId], references: [id])
+  salaryType    EmployPayType @default(Once)
+  amount        Float
   allowanceDate DateTime
 
   createdAt DateTime @default(now())
@@ -189,7 +213,7 @@ model EmployeeDeduction {
   deductionId   Int
   deduction     Deduction     @relation(fields: [deductionId], references: [id])
   salaryType    EmployPayType @default(Once)
-  amount      Float
+  amount        Float
   deductionDate DateTime
 
   createdAt DateTime @default(now())
@@ -209,6 +233,8 @@ model Attendance {
   employee    Employee @relation(fields: [employeeId], references: [id])
   logType     Logs     @default(AM_IN)
   datetimeLog DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

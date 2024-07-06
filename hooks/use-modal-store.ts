@@ -1,6 +1,7 @@
 import { AttendanceColumn } from "@/components/layouts/attendance/column";
 import { EmployeeColumn } from "@/components/layouts/employee/column";
 import { PayrollColumn } from "@/components/layouts/payroll/column";
+import { PayrollListColumn } from "@/components/layouts/payroll_list/columns";
 import {
   Allowance,
   Deduction,
@@ -48,7 +49,8 @@ interface ModalData {
   allowances?: Allowance[];
   deduction?: Deduction;
   deductions?: Deduction[];
-  payroll?: PayrollColumn;
+  payroll?: Payroll;
+  payrollList?: PayrollListColumn;
   attendance?: AttendanceColumn
 }
 
