@@ -2,6 +2,7 @@ import { AttendanceColumn } from "@/components/layouts/attendance/column";
 import { EmployeeColumn } from "@/components/layouts/employee/column";
 import { PayrollColumn } from "@/components/layouts/payroll/column";
 import { PayrollListColumn } from "@/components/layouts/payroll_list/columns";
+import { UserColumn } from "@/components/layouts/users/columns";
 import {
   Allowance,
   Deduction,
@@ -36,6 +37,9 @@ export type ModalType =
   | "deletePayroll"
   | "viewPayroll"
   | "createAttendance"
+  |"createUser"
+  | "editUser"
+  | "deleteUser"
   ;
 
 interface ModalData {
@@ -49,9 +53,10 @@ interface ModalData {
   allowances?: Allowance[];
   deduction?: Deduction;
   deductions?: Deduction[];
-  payroll?: Payroll;
+  payroll?: Payroll ;
   payrollList?: PayrollListColumn;
   attendance?: AttendanceColumn
+  user?: UserColumn
 }
 
 interface ModalStore {
