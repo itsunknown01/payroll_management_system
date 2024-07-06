@@ -1,7 +1,7 @@
 "use client";
 
 import { useModal } from "@/hooks/use-modal-store";
-import { Edit, EyeIcon, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { Button } from "../../ui/button";
 import { AttendanceColumn } from "./column";
 
@@ -10,7 +10,7 @@ interface CellActionProps {
 }
 
 const CellAction = ({ attendance }: CellActionProps) => {
-  const { onOpen, data } = useModal();
+  const { onOpen } = useModal();
 
   return (
     <div className="flex gap-2">

@@ -19,8 +19,8 @@ const UsersClient = ({data}: UsersClientProps) => {
     <div className="w-full">
         <div className="flex items-center justify-between pb-6">
         <Heading
-          title={`Allowance(${data.length})`}
-          description="Manage allowance here"
+          title={`Users(${data.length})`}
+          description="Manage users here"
           className="gap-y-2"
         />
         <Button onClick={() => onOpen("createUser")}>

@@ -5,41 +5,19 @@ import { auth } from "@/services/next-auth/auth";
 import React from "react";
 
 const EmployeePage = async () => {
-  const session = await auth();
-  const userId = session?.user.id;
+  const departments = await db.department.findMany();
 
-  const departments = await db.department.findMany({
-    where: {
-      userId,
-    },
-  });
-
-  const positions = await db.position.findMany({
-    where: {
-      userId,
-    },
-  });
+  const positions = await db.position.findMany();
 
   const employees = await db.employee.findMany({
-    where: {
-      userId,
-    },
     include: {
       department: true,
       position: true,
     },
   });
 
-  const allowances = await db.allowance.findMany({
-    where: {
-      userId,
-    },
-  });
-  const deductions = await db.deduction.findMany({
-    where: {
-      userId,
-    },
-  });
+  const allowances = await db.allowance.findMany();
+  const deductions = await db.deduction.findMany();
   const formattedData: EmployeeColumn[] = employees.map((item) => ({
     id: item.id,
     userId: item.userId,

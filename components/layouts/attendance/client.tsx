@@ -8,7 +8,7 @@ import { Button } from "../../ui/button";
 import DataTable from "../../ui/data-table";
 import Heading from "../../ui/heading";
 import { Separator } from "../../ui/separator";
-import { AttendanceColumn, columns } from "./column";
+import { columns } from "./column";
 
 interface AttendanceClientProps {
   data: any[];

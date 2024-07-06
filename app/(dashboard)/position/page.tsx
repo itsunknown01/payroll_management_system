@@ -8,17 +8,10 @@ const PositionPage = async () => {
   const session = await auth();
   const userId = session?.user.id;
 
-  const departments = await db.department.findMany({
-    where: {
-      userId,
-    },
-  });
+  const departments = await db.department.findMany();
 
   const position = await db.position.findMany({
-    where: {
-      userId,
-    },
-    include: { department: true },
+      include: { department: true },
   });
 
   const formattedData: PositionColumn[] = position.map((item) => ({

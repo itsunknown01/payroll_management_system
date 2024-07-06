@@ -1,18 +1,9 @@
 import AllowanceClient from '@/components/layouts/allowance/client'
 import { AllowanceColumn } from '@/components/layouts/allowance/column'
 import { db } from '@/lib/db'
-import { auth } from '@/services/next-auth/auth'
-import React from 'react'
 
 const AllowancePage = async () => {
-  const session = await auth()
-  const userId=  session?.user.id
-  
-  const allowances = await db.allowance.findMany({
-    where: {
-      userId
-    }
-  })
+  const allowances = await db.allowance.findMany()
 
   const formattedData: AllowanceColumn[] = allowances.map((item)=> ({
     id: item.id,

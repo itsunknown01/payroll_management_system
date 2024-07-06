@@ -1,16 +1,8 @@
 import DepartmentClient from "@/components/layouts/department/client";
 import { db } from "@/lib/db";
-import { auth } from "@/services/next-auth/auth";
 
 const DepartmentPage = async () => {
-  const session = await auth();
-  const userId = session?.user.id;
-
-  const departments = await db.department.findMany({
-    where: {
-      userId,
-    },
-  });
+  const departments = await db.department.findMany();
 
   return (
     <div className="w-full">

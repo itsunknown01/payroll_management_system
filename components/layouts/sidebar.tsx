@@ -9,13 +9,17 @@ import { Button } from "../ui/button";
 import { SidebarLinks } from "@/routes/sidebarLinks";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 const Sidebar = () => {
+  const user = useCurrentUser();
   const pathname = usePathname();
   return (
     <Card className="h-full rounded-none w-80">
       <div className="flex py-2 flex-col gap-3 my-20">
-        {SidebarLinks.map((link) => (
+        {SidebarLinks.filter((link) =>
+          link.role ? link.role === user?.role : true
+        ).map((link) => (
           <Button
             className={cn(
               "w-full rounded-none text-left justify-start",

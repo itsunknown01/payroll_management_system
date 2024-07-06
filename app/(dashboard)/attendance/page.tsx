@@ -8,13 +8,7 @@ import React from "react";
 import { date } from "zod";
 
 const AttendancePage = async () => {
-  const session = await auth();
-  const userId = session?.user.id;
-
   const attendances = await db.attendance.findMany({
-    where: {
-      userId,
-    },
     include: {
       employee: true,
     },
@@ -23,11 +17,7 @@ const AttendancePage = async () => {
     },
   });
 
-  const employees = await db.employee.findMany({
-    where: {
-      userId,
-    },
-  });
+  const employees = await db.employee.findMany();
 
   return (
     <div className="w-full">

@@ -12,7 +12,7 @@ interface CellActionProps {
 const CellAction = ({ data }: CellActionProps) => {
   const { onOpen } = useModal();
 
-  const allowance: Allowance = {
+  const allowance: any = {
     id: data.id,
     allowance: data.info.allowance,
     description: data.info.description,

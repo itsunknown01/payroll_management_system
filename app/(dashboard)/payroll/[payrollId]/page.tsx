@@ -31,20 +31,6 @@ export default async function PayrollListPage({params}: {params: {payrollId: num
     employee: item.employee
   }))
 
-  // const formattedData: PayrollListColumn = {
-  //   refNo: payrollList.payroll.refNo,
-  //   employeeName: `${payrollList.employee.lastName}, ${payrollList.employee.firstName} ${payrollList.employee.middleName}`,
-  //   absent: payrollList.absent,
-  //   late: payrollList.late,
-  //   totalAllowance: payrollList.allowanceAmount,
-  //   tottalDeduction: payrollList.deductionAmount,
-  //   net: payrollList.net,
-  //   payroll: payrollList.payroll,
-  //   To: payrollList.payroll.To,
-  //   From: payrollList.payroll.From,
-  //   type: payrollList.payroll.type
-  // }
-
   return (
     <div className="w-full">
       <div className="flex-1 space-y-2 pt-6 p-8 w-full">

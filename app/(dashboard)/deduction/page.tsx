@@ -5,14 +5,7 @@ import { auth } from '@/services/next-auth/auth'
 import React from 'react'
 
 const DeductionPage = async () => {
-  const session = await auth()
-  const userId=  session?.user.id
-
-  const deductions = await db.deduction.findMany({
-    where: {
-      userId
-    },
-  })
+  const deductions = await db.deduction.findMany()
 
   const formattedData: DeductionColumn[] = deductions.map((item) => ({
     id: item.id,

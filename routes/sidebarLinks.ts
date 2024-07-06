@@ -8,11 +8,13 @@ import {
   FaUser,
   FaUserTie,
 } from "react-icons/fa";
+import { UserRole } from "@prisma/client";
 
 interface SidebarLinkProps {
   route: string;
   icon: React.ElementType;
   title: string;
+  role?: UserRole
 }
 
 export const SidebarLinks: SidebarLinkProps[] = [
@@ -60,5 +62,6 @@ export const SidebarLinks: SidebarLinkProps[] = [
     route: "/users",
     icon: FaUser,
     title: "Users",
+    role: UserRole.ADMIN
   },
 ];

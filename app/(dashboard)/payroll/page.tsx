@@ -5,14 +5,8 @@ import { formatDate } from "@/lib/utils";
 import { auth } from "@/services/next-auth/auth";
 
 const PayrollPage = async () => {
-  const session = await auth();
-  const userId = session?.user.id;
 
-  const payroll = await db.payroll.findMany({
-    where: {
-      userId,
-    },
-  });
+  const payroll = await db.payroll.findMany();
 
   const formattedData: PayrollColumn[] = payroll.map((item) => ({
     id: item.id,
@@ -23,17 +17,9 @@ const PayrollPage = async () => {
     type: item.type,
   }));
 
-  const departments = await db.department.findMany({
-    where: {
-      userId,
-    },
-  });
+  const departments = await db.department.findMany();
 
-  const positions = await db.position.findMany({
-    where: {
-      userId,
-    },
-  });
+  const positions = await db.position.findMany();
 
   return (
     <div className="w-full">
