@@ -1,4 +1,4 @@
-import { EmployPayType, Logs, PayType } from "@prisma/client";
+import { EmployPayType, Logs, PayType, UserRole } from "@prisma/client";
 import * as z from "zod";
 
 export const LoginSchema = z.object({
@@ -33,6 +33,8 @@ export const RegisterSchema = z.object({
     message: "Name is required",
   }),
 });
+
+// Dashboard
 
 export const DepartmentSchema = z.object({
   name: z.string().min(1, {
@@ -125,4 +127,17 @@ export const AttendanceSchema = z.object({
   date: z.string().min(1,{
     message: "Date is required"
   })
+})
+
+export const UserSchema = z.object({
+  name: z.string().min(1,{
+    message: "Name is required"
+  }),
+  email: z.string().min(1,{
+    message: "Name is required"
+  }),
+  password: z.string().min(6,{
+    message: "Password must be of 6 letters or more"
+  }),
+  role: z.nativeEnum(UserRole)
 })

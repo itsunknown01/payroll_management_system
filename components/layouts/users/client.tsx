@@ -23,7 +23,7 @@ const UsersClient = ({data}: UsersClientProps) => {
           description="Manage allowance here"
           className="gap-y-2"
         />
-        <Button onClick={() => onOpen("createAllowance")}>
+        <Button onClick={() => onOpen("createUser")}>
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
       </div> 

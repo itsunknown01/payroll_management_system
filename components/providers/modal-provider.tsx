@@ -24,6 +24,7 @@ import CreateAttendanceModal from '../modals/attendance/create-attendance-modal'
 import EditPayrollModal from '../modals/payroll/edit-payroll-modal'
 import DeletePayrollModal from '../modals/payroll/delete-payroll-modal'
 import ViewPayrollModal from '../modals/payroll/view-payroll-modal'
+import CreateUserModal from '../modals/user/create-user-modal'
 
 const ModalProvider = () => {
   const [isMounted,setIsMounted] = useState(false)
@@ -74,6 +75,9 @@ const ModalProvider = () => {
  
       {/* Attedance */}
       <CreateAttendanceModal />
+
+      {/* User */}
+      <CreateUserModal />
     </>
   )
 }
