@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export interface CardWrapperProps {
   children: React.ReactNode;
@@ -9,7 +10,9 @@ export interface CardWrapperProps {
 
 const CardWrapper = ({ children, className }: CardWrapperProps) => {
   return (
-    <Card className={cn("w-[450px] shadow-md", className)}>{children}</Card>
+    <Card className={cn("max-w-[1070px] shadow-md flex", className)}>
+      {children}
+    </Card>
   );
 };
 
