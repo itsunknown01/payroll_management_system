@@ -5,9 +5,6 @@ import { auth } from "@/services/next-auth/auth";
 import React from "react";
 
 const PositionPage = async () => {
-  const session = await auth();
-  const userId = session?.user.id;
-
   const departments = await db.department.findMany();
 
   const position = await db.position.findMany({
@@ -16,7 +13,6 @@ const PositionPage = async () => {
 
   const formattedData: PositionColumn[] = position.map((item) => ({
     id: item.id,
-    userId: item.userId,
     name: item.name,
     departmentId: item.departmentId,
     departmentName: item.department.name,

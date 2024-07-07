@@ -48,14 +48,14 @@ const CellAction = ({ payroll }: CellActionProps) => {
         disabled={loading}
         onClick={() =>
           onOpen("editPayroll", {
-            payroll,
+            payrollData: payroll,
           })
         }
       >
         <Edit className="h-4 w-4" />
       </Button>
       <Button
-        onClick={() => onOpen("deletePayroll", { payroll })}
+        onClick={() => onOpen("deletePayroll", { payrollData:payroll })}
         variant="destructive"
         disabled={loading}
       >

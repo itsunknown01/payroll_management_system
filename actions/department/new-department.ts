@@ -16,9 +16,6 @@ export const newDepartment = async (
     return { error: "Invalid field" };
   }
 
-  const session = await auth();
-  const userId: string = session?.user.id as string;
-
   const { name } = validation.data;
 
   const existingDepartment = await getDepartmentByName(name);
@@ -30,7 +27,6 @@ export const newDepartment = async (
   await db.department.create({
     data: {
       name,
-      userId,
     },
   });
 

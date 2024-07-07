@@ -1,8 +1,6 @@
 import EmployeeClient from "@/components/layouts/employee/client";
 import { EmployeeColumn } from "@/components/layouts/employee/column";
 import { db } from "@/lib/db";
-import { auth } from "@/services/next-auth/auth";
-import React from "react";
 
 const EmployeePage = async () => {
   const departments = await db.department.findMany();
@@ -20,7 +18,6 @@ const EmployeePage = async () => {
   const deductions = await db.deduction.findMany();
   const formattedData: EmployeeColumn[] = employees.map((item) => ({
     id: item.id,
-    userId: item.userId,
     employee_no: item.employee_no,
     firstName: item.firstName,
     middleName: item.middleName,

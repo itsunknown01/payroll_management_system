@@ -2,14 +2,13 @@
 
 import { useTransition } from "react";
 
-import { deletePosition } from "@/actions/position/delete-position";
+import { deletePayroll } from "@/actions/payroll/delete-position";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import Modal from "@/components/ui/modal";
 import { useModal } from "@/hooks/use-modal-store";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { deletePayroll } from "@/actions/payroll/delete-position";
 
 const DeletePayrollModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -17,11 +16,11 @@ const DeletePayrollModal = () => {
   const router = useRouter()
 
   const isModalOpen = isOpen && type == "deletePayroll";
-  const { payroll } = data;
+  const { payrollData } = data;
 
   const handleConfirm = () => {
     startTransition(() => {
-      deletePayroll(payroll?.id).then((data) => {
+      deletePayroll(payrollData?.id).then((data) => {
         toast.error(data.error);
         toast.success(data.success);
       });

@@ -53,6 +53,7 @@ interface ModalData {
   allowances?: Allowance[];
   deduction?: Deduction;
   deductions?: Deduction[];
+  payrollData?: PayrollColumn;
   payroll?: Payroll | null ;
   payrollList?: PayrollListColumn;
   attendance?: AttendanceColumn

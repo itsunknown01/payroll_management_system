@@ -6,9 +6,6 @@ import { auth } from "@/services/next-auth/auth";
 import * as z from "zod";
 
 export const newPayroll = async (values: z.infer<typeof PayrollSchema>) => {
-  const session = await auth();
-  const userId: string = session?.user.id as string;
-
   const validation = PayrollSchema.safeParse(values);
 
   if (!validation.success) {
@@ -24,7 +21,6 @@ export const newPayroll = async (values: z.infer<typeof PayrollSchema>) => {
 
   await db.payroll.create({
     data: {
-      userId,
       refNo: presentDate,
       From: new Date(dateFrom),
       To: new Date(dateTo),

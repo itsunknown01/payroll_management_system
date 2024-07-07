@@ -37,31 +37,31 @@ const EditPayrollModal = () => {
   const router = useRouter();
   const { isOpen, onClose, type, data } = useModal();
 
-  const { payroll } = data;
+  const { payrollData } = data;
 
   const isModalOpen = isOpen && type == "editPayroll";
 
   const form = useForm<z.infer<typeof PayrollSchema>>({
     resolver: zodResolver(PayrollSchema),
     defaultValues: {
-      dateFrom: payroll?.From || "",
-      dateTo: payroll?.To || "",
-      type: payroll?.type || PayType.Monthly,
+      dateFrom: payrollData?.From || "",
+      dateTo: payrollData?.To || "",
+      type: payrollData?.type || PayType.Monthly,
     },
   });
 
   useEffect(() => {
-    if (payroll) {
-      form.setValue("dateFrom", payroll.From);
-      form.setValue("dateTo", payroll.To);
-      form.setValue("type", payroll.type);
+    if (payrollData) {
+      form.setValue("dateFrom", payrollData.From);
+      form.setValue("dateTo", payrollData.To);
+      form.setValue("type", payrollData.type);
     }
-  }, [form, payroll]);
+  }, [form, payrollData]);
 
   const OnSubmit = async (values: z.infer<typeof PayrollSchema>) => {
     form.reset();
     startTransition(() => {
-      editPayroll(values,payroll?.id).then((data) => {
+      editPayroll(values,payrollData?.id).then((data) => {
         toast.error(data.error);
         toast.success(data.success);
       });
