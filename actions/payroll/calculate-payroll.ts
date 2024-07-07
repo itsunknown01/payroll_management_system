@@ -1,11 +1,11 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { Logs, PayType, StatusType } from "@prisma/client";
+import { Allowance, Deduction, Logs, StatusType } from "@prisma/client";
 
 const PayTypeDays: Record<"Monthly" | "Semi_Monthly", number> = {
-    Monthly: 22,
-    Semi_Monthly: 11,
+  Monthly: 22,
+  Semi_Monthly: 11,
 };
 
 export const calculatePayroll = async (id: number) => {
@@ -85,80 +85,82 @@ export const calculatePayroll = async (id: number) => {
       }
     }
 
-      const deductions = await db.employeeDeduction.findMany({
-        where: {
-          employeeId: employee.id,
-          OR: [
-            {
-              salaryType: payroll.type,
+    const deductions = await db.employeeDeduction.findMany({
+      where: {
+        employeeId: employee.id,
+        OR: [
+          {
+            salaryType: payroll.type,
+          },
+          {
+            deductionDate: {
+              gte: dateFrom,
+              lte: dateTo,
             },
-            {
-              deductionDate: {
-                gte: dateFrom,
-                lte: dateTo,
-              },
+          },
+        ],
+      },
+    });
+
+    const allowances = await db.employeeAllowance.findMany({
+      where: {
+        employeeId: employee.id,
+        OR: [
+          {
+            salaryType: payroll.type,
+          },
+          {
+            allowanceDate: {
+              gte: dateFrom,
+              lte: dateTo,
             },
-          ],
-        },
+          },
+        ],
+      },
+    });
+
+    deductions.forEach((ded) => {
+      dedArr.push({
+        did: ded.deductionId,
+        amount: ded.amount,
       });
+      dedAmount += ded.amount;
+      net -= ded.amount;
+    });
 
-      const allowances = await db.employeeAllowance.findMany({
-        where: {
-          employeeId: employee.id,
-          OR: [
-            {
-              salaryType: payroll.type,
-            },
-            {
-              allowanceDate: {
-                gte: dateFrom,
-                lte: dateTo,
-              },
-            },
-          ],
-        },
+    allowances.forEach((aed) => {
+      allArr.push({
+        aid: aed.allowanceId,
+        amount: aed.amount,
       });
+      allowAmount += aed.amount;
+      net -= aed.amount;
+    });
 
-      deductions.forEach(ded => {
-        dedArr.push({
-            did: ded.deductionId, amount: ded.amount
-        })
-        dedAmount += ded.amount
-        net -= ded.amount
-      })
+    const typeDays = PayTypeDays[payroll.type as keyof typeof PayTypeDays];
+    absent = typeDays - present;
 
-      allowances.forEach(aed => {
-        allArr.push({
-            aid: aed.allowanceId, amount: aed.amount
-        })
-        allowAmount += aed.amount
-        net -= aed.amount
-      })
+    await db.payrollList.create({
+      data: {
+        payrollId: id,
+        employeeId: employee.id,
+        present,
+        absent,
+        late: late.toString(),
+        salary,
+        net,
+        allowanceAmount: allowAmount,
+        allowances: JSON.stringify(allArr),
+        deductionAmount: dedAmount,
+        deductions: JSON.stringify(dedArr),
+      },
+    });
+  }
 
-      const typeDays = PayTypeDays[payroll.type as keyof typeof PayTypeDays]
-      absent = typeDays - present
+  await db.payroll.update({
+    where: { id },
+    data: { status: StatusType.Computed },
+  });
 
-      await db.payrollList.create({
-        data: {
-            payrollId: id,
-            employeeId: employee.id,
-            present,
-            absent,
-            late: late.toString(),
-            salary,
-            net,
-            allowanceAmount: allowAmount,
-            allowances: JSON.stringify(allArr),
-            deductionAmount: dedAmount,
-            deductions: JSON.stringify(dedArr)
-        }
-      })
-    }
-
-      await db.payroll.update({
-        where: {id},
-        data: { status: StatusType.Computed}
-      })
-
-      return {success: "Payroll Calculated successfully"}
+  return { success: "Payroll Calculated successfully" };
 };

@@ -23,7 +23,7 @@ import {
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  searchkey: string
+  searchkey?: string
 }
 
 function DataTable<TData, TValue>({ columns,data, searchkey }: DataTableProps<TData, TValue>) {
@@ -43,14 +43,16 @@ function DataTable<TData, TValue>({ columns,data, searchkey }: DataTableProps<TD
   return (
     <div className="py-6">
       <div className="flex items-center py-4">
-        <Input
-          placeholder="Search"
-          value={(table.getColumn(searchkey)?.getFilterValue() as string) ?? ""}
-          onChange={(e) =>
-            table.getColumn(searchkey)?.setFilterValue(e.target.value)
-          }
-          className="max-w-sm"
-        />
+        {searchkey !== undefined && (
+          <Input
+            placeholder="Search"
+            value={(table.getColumn(searchkey as string)?.getFilterValue() as string) ?? ""}
+            onChange={(e) =>
+              table.getColumn(searchkey as string)?.setFilterValue(e.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
       </div>
       <div className="rounded-md border">
         <Table>

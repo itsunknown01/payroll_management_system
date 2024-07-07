@@ -5,32 +5,54 @@ import Modal from "@/components/ui/modal";
 import { Separator } from "@/components/ui/separator";
 import { useModal } from "@/hooks/use-modal-store";
 import { formatDate } from "@/lib/utils";
+import { Allowance } from "@prisma/client";
+import { useEffect, useState } from "react";
 
 export default function ViewPayrollModal() {
   const { isOpen, type, data, onClose } = useModal();
+  const { payrollList, allowances, deductions } = data;
 
-  const { payrollList, payroll } = data;
-  console.log(payroll);
+  const [allowancesData, setAllowances] = useState<Record<string, string>>({});
+  const [deductionsData, setDeductions] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (allowances) {
+      const allowanceMap: Record<string, string> = {};
+      allowances?.forEach(
+        (allowance) => (allowanceMap[allowance.id] = allowance.allowance)
+      );
+      setAllowances(allowanceMap);
+    }
+
+    if (deductions) {
+      const deductionMap: Record<string, string> = {};
+      deductions?.forEach(
+        (deduction) => (deductionMap[deduction.id] = deduction.deduction)
+      );
+      setDeductions(deductionMap);
+    }
+  }, [deductions, allowances]);
 
   const isModalOpen = isOpen && type === "viewPayroll";
 
   const handleClose = () => {
     onClose();
   };
+
   return (
-    <Modal isOpen={isModalOpen} onClose={handleClose} title="Employee Payslip">
+    <Modal isOpen={isModalOpen} onClose={handleClose} title="Employee Payslip" className="max-w-3xl">
       <div className="flex flex-col space-y-2 px-6">
         <h2>Employee ID {payrollList?.employee?.employee_no}</h2>
         <h2>Name {payrollList?.employeeName}</h2>
         <Separator className="h-[2px]" />
-        <div className="flex">
+        <div className="flex items-start justify-between px-2">
           <div className="flex flex-col">
             <h2>Payroll Ref: {payrollList?.refNo}</h2>
             <h2>
               Payroll Range:{" "}
-              {`${formatDate(payrollList?.payroll?.From as Date)} - ${formatDate(
-                payrollList?.payroll?.To as Date
-              )}`}
+              {`${formatDate(
+                payrollList?.payroll?.From as Date
+              )} - ${formatDate(payrollList?.payroll?.To as Date)}`}
             </h2>
             <h2>Payroll Type: {payrollList?.payroll?.type}</h2>
           </div>
@@ -49,9 +71,11 @@ export default function ViewPayrollModal() {
               <CardTitle className="text-md">Allowances</CardTitle>
             </CardHeader>
             <CardContent>
-              <Card className="mt-4 w-full flex flex-col items-center justify-center px-6 py-4 gap-y-4">
-                {}
+                {payrollList?.allowances?.map(allowance => (
+              <Card key={allowance.aid} className="mt-4 w-full flex flex-col items-center justify-between px-6 py-4 gap-y-4">
+                {allowancesData[allowance.aid]} allowances - {allowance.amount}
               </Card>
+                ))}
             </CardContent>
           </Card>
           <Card className="w-full">
@@ -59,9 +83,11 @@ export default function ViewPayrollModal() {
               <CardTitle className="text-md">Deductions</CardTitle>
             </CardHeader>
             <CardContent>
-              <Card className="mt-4 w-full flex flex-col items-center justify-center px-6 py-4 gap-y-4">
-                {}
+            {payrollList?.deductions?.map(deduction => (
+              <Card key={deduction.did} className="mt-4 w-full flex flex-col items-center justify-between px-6 py-4 gap-y-4">
+                {deductionsData[deduction.did]} deductions - {deduction.amount}
               </Card>
+                ))}
             </CardContent>
           </Card>
         </CardContent>

@@ -13,6 +13,8 @@ export interface PayrollListColumn {
     net: number
     payroll?: Payroll,
     employee?: Employee
+    allowances?:any[],
+    deductions?:any[],
   } 
 
 export const columns: ColumnDef<PayrollListColumn>[] = [

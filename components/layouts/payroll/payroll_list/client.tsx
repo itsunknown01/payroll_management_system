@@ -11,24 +11,31 @@ import { useEffect, useTransition } from "react";
 import { FcPrint } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { PayrollListColumn, columns } from "./columns";
-import { Payroll } from "@prisma/client";
+import { Allowance, Deduction, Payroll } from "@prisma/client";
 import { useModal } from "@/hooks/use-modal-store";
+import { useParams } from "next/navigation";
 
 export default function PayrollListClient({
   data,
   payroll,
+  allowances,
+  deductions,
 }: {
   data: PayrollListColumn[];
   payroll: Payroll | null;
+  allowances: Allowance[];
+  deductions: Deduction[];
 }) {
+  const params = useParams()
   const [loading, startTransition] = useTransition();
 
   const { setData } = useModal();
+
   useEffect(() => {
-    if (payroll) {
-      setData({ payroll });
+    if (payroll || allowances || deductions) {
+      setData({ payroll, allowances, deductions });
     }
-  }, [payroll, setData]);
+  }, [payroll, allowances, deductions, setData]);
 
   const dateFrom = formatDate(payroll?.From as Date);
   const dateTo = formatDate(payroll?.To as Date);
@@ -41,6 +48,16 @@ export default function PayrollListClient({
       });
     });
   };
+
+  const handlePrint = () => {
+    const printWindow = window.open(`/print_payroll/${Number(params.payrollId)}`, '_blank', 'height=500,width=900')
+    setTimeout(() =>{
+      printWindow?.print()
+      setTimeout(() => {
+        printWindow?.close()
+      },500)
+    },1000)
+  }
 
   return (
     <div className="w-full">
@@ -66,7 +83,7 @@ export default function PayrollListClient({
         <Button
           className="mt-20 bg-green-500 text-white py-2 px-10 rounded hover:bg-green-600"
           type="button"
-          id="print_btn"
+          onClick={handlePrint}
         >
           Print <FcPrint fontSize={26} className="ml-2" />
         </Button>

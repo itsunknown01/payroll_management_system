@@ -2,7 +2,7 @@
 
 import { useModal } from "@/hooks/use-modal-store";
 import { EyeIcon } from "lucide-react";
-import { Button } from "../../ui/button";
+import { Button } from "../../../ui/button";
 import { PayrollListColumn } from "./columns";
 
 interface CellActionProps {

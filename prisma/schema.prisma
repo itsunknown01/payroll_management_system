@@ -165,20 +165,20 @@ model Allowance {
 }
 
 model PayrollList {
-  id              Int      @id @unique @default(autoincrement())
+  id              Int       @id @unique @default(autoincrement())
   payrollId       Int
-  payroll         Payroll  @relation(fields: [payrollId], references: [id])
+  payroll         Payroll   @relation(fields: [payrollId], references: [id])
   employeeId      Int
-  employee        Employee @relation(fields: [employeeId], references: [id])
+  employee        Employee  @relation(fields: [employeeId], references: [id])
   present         Int
   absent          Int
   late            String
   salary          Float
   allowanceAmount Float
-  allowances      String
   deductionAmount Float
-  deductions      String
   net             Int
+  deductions      String
+  allowances      String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
