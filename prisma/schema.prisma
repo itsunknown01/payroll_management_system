@@ -22,13 +22,6 @@ model User {
   role          UserRole  @default(USER)
 
   accounts    Account[]
-  departments Department[]
-  position    Position[]
-  employees   Employee[]
-  payrolls    Payroll[]
-  allowances  Allowance[]
-  deductions  Deduction[]
-  attendances Attendance[]
 }
 
 model Account {
@@ -74,25 +67,17 @@ model Department {
   name      String
   positions Position[]
   employees Employee[]
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
 }
 
 model Position {
   id           Int    @id @unique @default(autoincrement())
   name         String
   departmentId Int
-  userId       String
 
   department Department @relation(fields: [departmentId], references: [id])
-  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   employees Employee[]
 
-  @@index([userId])
 }
 
 model Employee {
@@ -103,10 +88,8 @@ model Employee {
   lastName    String
   salary      Int
 
-  userId       String
   departmentId Int
   positionId   Int
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   department   Department @relation(fields: [departmentId], references: [id])
   position     Position   @relation(fields: [positionId], references: [id])
 
@@ -131,9 +114,7 @@ model Payroll {
   refNo  String   @unique
   From   DateTime
   To     DateTime
-  userId String
 
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   type         PayType       @default(Monthly)
   status       StatusType    @default(New)
   payrollLists PayrollList[]
@@ -147,9 +128,6 @@ model Deduction {
   deduction   String
   description String
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   employeeDeduction EmployeeDeduction[]
 }
 
@@ -157,9 +135,6 @@ model Allowance {
   id          Int    @id @unique @default(autoincrement())
   allowance   String
   description String
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   employeeAllowance EmployeeAllowance[]
 }
@@ -233,8 +208,6 @@ model Attendance {
   employee    Employee @relation(fields: [employeeId], references: [id])
   logType     Logs     @default(AM_IN)
   datetimeLog DateTime @default(now())
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
