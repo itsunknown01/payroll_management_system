@@ -6,9 +6,6 @@ import { auth } from "@/services/next-auth/auth";
 import * as z from "zod";
 
 export const newAllowance = async (values: z.infer<typeof AllowanceSchema>) => {
-  const session = await auth()
-  const userId = session?.user.id
-
   const validation = AllowanceSchema.safeParse(values);
 
   if (!validation.success) {
@@ -31,7 +28,6 @@ export const newAllowance = async (values: z.infer<typeof AllowanceSchema>) => {
     data: {
       allowance,
       description,
-      userId: userId as string
     },
   });
 
