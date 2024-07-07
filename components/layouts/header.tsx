@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-import { auth, signOut } from "@/services/next-auth/auth";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { auth } from "@/services/next-auth/auth";
+import UserAvatar from "../feature/user-avatar";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 
@@ -15,19 +15,7 @@ const Header = async () => {
       </Button>
 
       <div className="pr-8">
-      <form action={async () => {
-        "use server";
-
-        await signOut()
-      }}>
-      <Button
-        type="submit"
-      >
-        Sign out
-      </Button>
-
-      </form>
-        {/* <UserAvatar name={session?.user.name} image={session?.user.image} /> */}
+        <UserAvatar name={session?.user.name} image={session?.user.image} />
       </div>
     </Card>
   );

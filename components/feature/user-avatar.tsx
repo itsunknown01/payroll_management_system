@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import { signOut } from "next-auth/react";
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card } from "../ui/card";
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface UserAvatarProps {
   name: string | null | undefined;
@@ -13,17 +15,19 @@ const UserAvatar = ({ name, image }: UserAvatarProps) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col relative">
-    <Avatar onClick={() => setOpen(!open)}>
-      {image && <AvatarImage src={image} />}
-      <AvatarFallback>{name?.slice(0, 1)}</AvatarFallback>
-    </Avatar>
-    {open && (
-        <div>
-            {/* TODO Profile card */}
-        </div>
-      )}
-    </div>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Avatar>
+          {image && <AvatarImage src={image} />}
+          <AvatarFallback>{name?.slice(0, 1)}</AvatarFallback>
+        </Avatar>
+      </PopoverTrigger>
+      <PopoverContent className="w-full">
+        <Button variant="ghost" className="py-0 w-full" onClick={() => signOut()}>
+          SignOut
+        </Button>
+      </PopoverContent>
+    </Popover>
   );
 };
 
